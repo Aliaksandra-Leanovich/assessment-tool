@@ -1,0 +1,14 @@
+{
+  "button.signin": "Sign in",
+  "input.value.email": "Enter your email",
+  "input.value.password": "Enter your password",
+  "button.start": "Start the test",
+  "start.text.minutes": "You have ",
+  "minutes": "minutes",
+  "queshions": " queshions",
+  "start.text.queshions": "to answer ",
+  "start.text.descriptions": "You can change your responses to questions betore the test ends. You can take the test only once. So do your best!",
+  "button.next": "Next question",
+  "queshion": "QUEsTION",
+  "input.answer": "Write your answer..."
+}
