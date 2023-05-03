@@ -13,7 +13,7 @@ export const useSendEmail = () => {
 
   const sendEmail = async () => {
     try {
-      await axios.post("http://localhost:4000/pdf", {
+      await axios.post("https://assessment-tool-ff3c7.firebaseapp.com/pdf", {
         answers,
         questions,
         date,
