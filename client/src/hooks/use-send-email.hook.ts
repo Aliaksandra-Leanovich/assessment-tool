@@ -13,13 +13,22 @@ export const useSendEmail = () => {
 
   const sendEmail = async () => {
     try {
-      await axios.post("https://assessment-tool-ff3c7.firebaseapp.com/pdf", {
-        answers,
-        questions,
-        date,
-        email,
-        level,
-      });
+      await axios.post(
+        "https://assessment-tool-server.onrender.com/pdf",
+        {
+          answers,
+          questions,
+          date,
+          email,
+          level,
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
     } catch (error) {
       console.log(error);
     }
