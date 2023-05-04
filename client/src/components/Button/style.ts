@@ -17,8 +17,10 @@ const variantStyles = (variant = ButtonVariants.primary) =>
       &:hover {
         background-color: ${theme.color.error};
       }
+
       &:disabled {
         background: ${theme.color.primaryLight};
+        cursor: "not-allowed";
       }
     `,
 
@@ -57,7 +59,7 @@ export const ButtonSC = styled.button<Pick<IButton, "variant">>`
     ${({ disabled }) => (disabled ? true : false)};
     color: ${({ disabled }) =>
       disabled ? theme.color.primaryDark : theme.color.primary};
-    cursor: ${({ disabled }) => (disabled ? null : "pointer")};
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     box-shadow: none;
     border-bottom: 2px solid transparent;
   }
