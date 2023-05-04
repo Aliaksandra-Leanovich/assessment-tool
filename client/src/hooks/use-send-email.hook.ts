@@ -11,18 +11,27 @@ export const useSendEmail = () => {
   const { email, level } = useAppSelector(getUserInfo);
   const { date } = useGetTime();
 
-  const data = { answers, questions, date, email, level };
-
   const sendEmail = async () => {
-    await axios.post(`http://localhost:8000/createPdf`, data).then(() =>
-      axios
-        .get(`http://localhost:8000/fetchPdf`, { responseType: "blob" })
-        .then(() =>
-          axios.post("http://localhost:8000/sendPdf", {
-            email: "candidatestest73@gmail.com",
-          })
-        )
-    );
+    try {
+      await axios.post(
+        "https://assessment-tool-server.onrender.com/pdf",
+        {
+          answers,
+          questions,
+          date,
+          email,
+          level,
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { sendEmail };

@@ -8,6 +8,7 @@ export const InputSC = styled.textarea`
   resize: none;
   font-family: inherit;
   font-size: inherit;
+  padding: 10px;
 
   &::placeholder {
     opacity: 0.4;

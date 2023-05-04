@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+export interface IProps {
+  disabled: boolean;
+}
+
 export const StyledHeaderSC = styled.header`
   width: 100%;
   background-color: ${(props) => props.theme.color.primaryLight};
@@ -18,7 +22,8 @@ export const ContainerSC = styled.div`
   align-items: center;
 `;
 
-export const LogoContainerSC = styled.a`
+export const LogoContainerSC = styled.button<IProps>`
   max-width: 40px;
-  cursor: pointer;
+  ${({ disabled }) => (disabled ? true : false)};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 `;
