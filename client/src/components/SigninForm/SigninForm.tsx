@@ -18,7 +18,7 @@ export const SigninForm = ({ level }: IProps) => {
     control,
     handleSubmit,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<IUserForm>({
     resolver: yupResolver(validationSchema),
   });
@@ -63,7 +63,7 @@ export const SigninForm = ({ level }: IProps) => {
           required: false,
         }}
       />
-      <Button variant={ButtonVariants.signin} type="submit">
+      <Button variant={ButtonVariants.signin} disabled={!isDirty} type="submit">
         {t("button.signin")}
       </Button>
     </StyledFormSC>
