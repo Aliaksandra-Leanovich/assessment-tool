@@ -11,3 +11,4 @@ export { useSelect } from "./use-set-select.hook";
 export { useGetTime } from "./use-get-time.hook";
 export { useSendEmail } from "./use-send-email.hook";
 export { useLogout } from "./use-logout.hook";
+export { useSetLevel } from "./use-set-level.hook";

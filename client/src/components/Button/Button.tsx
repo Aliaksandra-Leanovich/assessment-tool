@@ -7,15 +7,9 @@ export const Button = ({
   type,
   variant,
   handleClick,
-  disabled,
 }: React.PropsWithChildren<IButton>) => {
   return (
-    <ButtonSC
-      disabled={disabled}
-      variant={variant}
-      type={type}
-      onClick={handleClick}
-    >
+    <ButtonSC variant={variant} type={type} onClick={handleClick}>
       {children}
     </ButtonSC>
   );

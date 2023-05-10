@@ -22,7 +22,7 @@ import {
 import { app } from "../utils";
 import { db } from "../utils/firebase";
 
-export const useSignInGoogle = (selected: string | null) => {
+export const useSignInGoogle = (level: string | null) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const localStorageKey = "userToken";
@@ -74,8 +74,8 @@ export const useSignInGoogle = (selected: string | null) => {
             const uid = userCredential.user.uid;
             const email = userCredential.user.email;
 
-            if (selected) {
-              setUsersToDB(email, selected, uid, token);
+            if (level) {
+              setUsersToDB(email, level, uid, token);
             }
 
             setUserTokenToStorage(token);
