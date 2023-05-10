@@ -1,3 +1,3 @@
 export interface IProps {
-  selected: string | null;
+  level: string | null;
 }

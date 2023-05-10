@@ -6,14 +6,13 @@ import { Button } from "../Button";
 import { ContainerSC, ImageSC } from "./style";
 import { IProps } from "./types";
 
-export const SigninMethods = ({ selected }: IProps) => {
-  const { signInWithGoogle } = useSignInGoogle(selected);
-  const { signInWithGithub } = useSignInWithGithub(selected);
+export const SigninMethods = ({ level }: IProps) => {
+  const { signInWithGoogle } = useSignInGoogle(level);
+  const { signInWithGithub } = useSignInWithGithub(level);
 
   return (
     <ContainerSC>
       <Button
-        disabled={!selected}
         variant={ButtonVariants.secondary}
         type="submit"
         handleClick={signInWithGoogle}
@@ -21,7 +20,6 @@ export const SigninMethods = ({ selected }: IProps) => {
         <ImageSC src={GoogleImage} alt="Google" />
       </Button>
       <Button
-        disabled={!selected}
         variant={ButtonVariants.secondary}
         type="submit"
         handleClick={signInWithGithub}

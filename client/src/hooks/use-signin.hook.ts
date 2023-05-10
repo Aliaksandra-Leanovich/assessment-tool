@@ -25,7 +25,7 @@ import { db } from "../utils/firebase";
 
 export const useSignIn = (
   clearErrors: UseFormClearErrors<IUserForm>,
-  selected: string | null
+  level: string | null
 ) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -79,8 +79,8 @@ export const useSignIn = (
           .then(async (userCredential) => {
             const token = await userCredential.user.getIdToken();
             const uid = userCredential.user.uid;
-            if (selected) {
-              setUsersToDB(data.email, selected, uid, token);
+            if (level) {
+              setUsersToDB(data.email, level, uid, token);
             }
 
             clearErrors();

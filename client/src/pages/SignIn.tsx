@@ -1,8 +1,8 @@
-import { useState } from "react";
 import Background from "../assets/background.png";
 import Logo from "../assets/logoLarge.png";
 import { SigninForm } from "../components/SigninForm";
 import { SigninMethods } from "../components/SigninMethods";
+import { useSetLevel } from "../hooks";
 import {
   ContainerSC,
   FormContainerSC,
@@ -13,7 +13,7 @@ import {
 } from "../styles/styles";
 
 export const SignIn = () => {
-  const [selected, setSelected] = useState<string | null>(null);
+  const { level } = useSetLevel();
 
   return (
     <ContainerSC>
@@ -22,8 +22,8 @@ export const SignIn = () => {
       </ImageContainerSC>
       <WrappperFormSC>
         <FormContainerSC>
-          <SigninForm selected={selected} setSelected={setSelected} />
-          <SigninMethods selected={selected} />
+          <SigninForm level={level} />
+          <SigninMethods level={level} />
         </FormContainerSC>
         <LogoSC src={Logo} alt="SOFTTECO" />
       </WrappperFormSC>

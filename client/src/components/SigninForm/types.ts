@@ -6,6 +6,5 @@ export interface IUserForm {
 }
 
 export interface IProps {
-  selected: string | null;
-  setSelected: (item: string | null) => void;
+  level: string | null;
 }
