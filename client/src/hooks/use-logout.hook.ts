@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { unsetUser } from "../store/slices/userSlice";
-import { routes } from "../routes";
 import { Statuses } from "../enums";
+import { getUserInfo } from "../store/selectors";
 
 export const useLogout = (status: string) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { uidLevel } = useAppSelector(getUserInfo);
 
   const handleLogout = () => {
     if (status !== Statuses.Test) {
       dispatch(unsetUser());
-      navigate(routes.SignIn);
+      navigate(`/signin/${uidLevel}`);
     }
   };
 

@@ -12,12 +12,12 @@ export const useGetQuestionsFromDB = () => {
   const dispatch = useAppDispatch();
   const [questionsFromDB, setQuestions] = useState<IQuestion[]>();
   const { questions } = useAppSelector(getQuestions);
-  const { level } = useAppSelector(getUserInfo);
+  const { uidLevel } = useAppSelector(getUserInfo);
 
   useEffect(() => {
-    if (level) {
+    if (uidLevel) {
       onSnapshot(
-        collection(db, Collections.test, level, Collections.questions),
+        collection(db, Collections.test, uidLevel, Collections.questions),
         (querySnapshot) => {
           const questions: any = [];
           querySnapshot.forEach((doc) => {
@@ -27,7 +27,7 @@ export const useGetQuestionsFromDB = () => {
         }
       );
     }
-  }, [level]);
+  }, [uidLevel]);
 
   useEffect(() => {
     questionsFromDB?.map((question) => {

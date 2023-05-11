@@ -7,6 +7,7 @@ const initialState: IUserStore = {
   id: localStorage.getItem("userId"),
   email: "",
   level: "",
+  uidLevel: localStorage.getItem("uid"),
 };
 
 const userSlice = createSlice({
@@ -30,12 +31,17 @@ const userSlice = createSlice({
       state.id = action.payload;
     },
 
+    setUidLevel: (state, action) => {
+      state.uidLevel = action.payload;
+    },
+
     unsetUser: (state) => {
       state.isAuthorized = localStorage.removeItem("userToken");
       state.id = "";
       state.token = "";
       state.email = "";
       state.level = "";
+      state.uidLevel = localStorage.removeItem("uid");
     },
   },
 });
@@ -46,5 +52,6 @@ export const {
   setUserLevel,
   setUserId,
   setUserEmail,
+  setUidLevel,
 } = userSlice.actions;
 export default userSlice.reducer;

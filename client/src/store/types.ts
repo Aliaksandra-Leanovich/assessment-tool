@@ -6,6 +6,7 @@ export interface IUserStore {
   id: string | null;
   level: string;
   email: string;
+  uidLevel: string | null | void;
 }
 
 export interface IQuestionsInitial {

@@ -14,6 +14,7 @@ import {
   TextSmallSC,
 } from "./style";
 import { IAnswerForm, IProps } from "./types";
+import { Loader } from "../Loader/Loader";
 
 export const Question = ({
   question,
@@ -51,42 +52,48 @@ export const Question = ({
 
   return (
     <div>
-      <ContainerSC>
-        <TextSmallSC>
-          {questionText} {questionNumber}
-        </TextSmallSC>
-        <TextSC>{question.question}</TextSC>
-      </ContainerSC>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <ContainerAnswerSC>
-          <Controller
-            name="answer"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <InputAnswer
-                label="answer"
-                value={value}
-                onChange={onChange}
-                register={register}
-                setAnswer={setAnswer}
-                placeholder={placeholderAnswer}
+      {question ? (
+        <>
+          <ContainerSC>
+            <TextSmallSC>
+              {questionText} {questionNumber}
+            </TextSmallSC>
+            <TextSC>{question.question}</TextSC>
+          </ContainerSC>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ContainerAnswerSC>
+              <Controller
+                name="answer"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <InputAnswer
+                    label="answer"
+                    value={value}
+                    onChange={onChange}
+                    register={register}
+                    setAnswer={setAnswer}
+                    placeholder={placeholderAnswer}
+                  />
+                )}
+                rules={{
+                  required: true,
+                }}
               />
-            )}
-            rules={{
-              required: true,
-            }}
-          />
-        </ContainerAnswerSC>
-        <ContainerButtonSC>
-          <Button
-            type="submit"
-            variant={ButtonVariants.primary}
-            disabled={!isDirty || !isValid}
-          >
-            {button}
-          </Button>
-        </ContainerButtonSC>
-      </form>
+            </ContainerAnswerSC>
+            <ContainerButtonSC>
+              <Button
+                type="submit"
+                variant={ButtonVariants.primary}
+                disabled={!isDirty || !isValid}
+              >
+                {button}
+              </Button>
+            </ContainerButtonSC>
+          </form>
+        </>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };
