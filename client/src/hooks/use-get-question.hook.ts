@@ -8,11 +8,13 @@ export const useGetQuestion = (
 ) => {
   const { questions } = useGetQuestionsFromDB();
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [button, setButton] = useState("Next question");
+  const [button, setButton] = useState("Save");
 
   const handleClick = useCallback(() => {
-    setQuestionNumber(questionNumber + 1);
-  }, [questionNumber]);
+    if (questions.length && questions.length === questionNumber) {
+      setQuestionNumber(questionNumber + 1);
+    }
+  }, [questionNumber, questions.length]);
 
   useEffect(() => {
     if (questions.length && questions.length < questionNumber) {
@@ -21,6 +23,8 @@ export const useGetQuestion = (
     }
     if (questions.length && questions.length === questionNumber) {
       setButton("Finish test");
+    } else {
+      setButton("Save");
     }
   }, [questionNumber, questions.length, setAnswersToDb, setStatus]);
 
@@ -29,5 +33,12 @@ export const useGetQuestion = (
     [questions, questionNumber]
   );
 
-  return { question, handleClick, questionNumber, button };
+  return {
+    question,
+    handleClick,
+    questionNumber,
+    button,
+    questions,
+    setQuestionNumber,
+  };
 };

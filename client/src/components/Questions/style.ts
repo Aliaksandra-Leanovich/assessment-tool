@@ -10,3 +10,13 @@ export const ContainerSC = styled.div`
   box-shadow: 0 3px 5px ${(props) => props.theme.color.boxShadow};
   border-radius: 14px;
 `;
+
+export const NumbersContainerSC = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px 0 60px;
+`;

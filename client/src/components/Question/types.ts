@@ -2,9 +2,11 @@ import { IQuestion } from "../Questions/types";
 
 export interface IProps {
   question: IQuestion;
-  handleClick: VoidFunction;
   questionNumber: number;
   button: string;
+  text: string;
+  setText: (item: string) => void;
+  handleClick: VoidFunction;
 }
 
 export interface IAnswerForm {
