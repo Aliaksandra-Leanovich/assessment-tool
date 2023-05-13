@@ -23,10 +23,6 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
     }
   }, [currentQuestion, questions]);
 
-  useEffect(() => {
-    console.log(text);
-  }, [text]);
-
   return (
     <>
       {currentQuestion ? (
