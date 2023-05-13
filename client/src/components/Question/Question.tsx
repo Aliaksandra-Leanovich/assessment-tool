@@ -21,6 +21,8 @@ export const Question = ({
   setText,
   text,
   questionNumber,
+  setAnswered,
+  handleUpdateAnswer,
   button,
   handleClick,
 }: IProps) => {
@@ -42,7 +44,8 @@ export const Question = ({
   const onSubmit = useCallback(() => {
     dispatch(setAllAnswers(userAnswer));
     handleClick();
-  }, [dispatch, handleClick, userAnswer]);
+    handleUpdateAnswer(question.id);
+  }, [dispatch, handleClick, handleUpdateAnswer, question.id, userAnswer]);
 
   const handleTextareaChange = useCallback(
     (value: string) => {

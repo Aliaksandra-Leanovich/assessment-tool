@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGetQuestion } from "../../hooks";
+import { useGetQuestion, useHandleUpdateAnswer } from "../../hooks";
 import { Number } from "../Number/Number";
 import { Question } from "../Question/Question";
 import { ContainerSC, NumbersContainerSC } from "./style";
@@ -14,12 +14,18 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
     questions[0]
   );
   const [text, setText] = useState("");
+  const [answered, setAnswered] = useState(false);
+  const { handleUpdateAnswer } = useHandleUpdateAnswer(setText, setAnswered);
 
   useEffect(() => {
     if (!currentQuestion) {
       setCurrentQuestion(questions[0]);
     }
   }, [currentQuestion, questions]);
+
+  useEffect(() => {
+    console.log(text);
+  }, [text]);
 
   return (
     <>
@@ -31,12 +37,14 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
                 key={item.id}
                 question={item}
                 children={index + 1}
-                setText={setText}
+                answered={answered}
                 setQuestionNumber={setQuestionNumber}
                 setCurrentQuestion={setCurrentQuestion}
                 questions={questions}
                 currentQuestion={currentQuestion}
                 questionNumber={questionNumber}
+                handleUpdateAnswer={handleUpdateAnswer}
+                text={text}
               />
             ))}
           </NumbersContainerSC>
@@ -48,6 +56,8 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
               button={button}
               question={currentQuestion}
               questionNumber={questionNumber}
+              setAnswered={setAnswered}
+              handleUpdateAnswer={handleUpdateAnswer}
             />
           </ContainerSC>
         </>

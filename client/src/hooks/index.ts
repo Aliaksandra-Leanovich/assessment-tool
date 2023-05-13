@@ -12,3 +12,4 @@ export { useSendEmail } from "./use-send-email.hook";
 export { useLogout } from "./use-logout.hook";
 export { useSetLevel } from "./use-set-level.hook";
 export { useHandleQuestionUpdate } from "./use-handle-question-update.hook";
+export { useHandleUpdateAnswer } from "./use-handle-update-answer.hook";

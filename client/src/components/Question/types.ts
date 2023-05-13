@@ -7,6 +7,8 @@ export interface IProps {
   text: string;
   setText: (item: string) => void;
   handleClick: VoidFunction;
+  setAnswered: (item: boolean) => void;
+  handleUpdateAnswer: (item: string) => void;
 }
 
 export interface IAnswerForm {

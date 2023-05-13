@@ -6,21 +6,23 @@ import { IProps } from "./types";
 export const Number = ({
   question,
   children,
-  setText,
+  answered,
   setQuestionNumber,
   questionNumber,
   setCurrentQuestion,
   questions,
+  text,
+  handleUpdateAnswer,
 }: IProps) => {
   const [currentNumber, setCurrentNumber] = useState(false);
+  //   const [answered, setAnswered] = useState(false);
 
   const { handleQuestionUpdate } = useHandleQuestionUpdate(
     question,
-    setText,
     setQuestionNumber,
     setCurrentQuestion,
-    setCurrentNumber,
-    questions
+    questions,
+    handleUpdateAnswer
   );
 
   useEffect(() => {
@@ -29,14 +31,18 @@ export const Number = ({
     } else {
       setCurrentNumber(false);
     }
-  }, [children, questionNumber]);
+  }, [children, questionNumber, text]);
 
   const handleClick = useCallback(() => {
     handleQuestionUpdate();
   }, [handleQuestionUpdate]);
 
   return (
-    <NumberSC currentNumber={currentNumber} onClick={handleClick}>
+    <NumberSC
+      answered={answered}
+      currentNumber={currentNumber}
+      onClick={handleClick}
+    >
       {children}
     </NumberSC>
   );
