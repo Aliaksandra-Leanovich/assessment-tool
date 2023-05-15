@@ -5,17 +5,18 @@ import { Question } from "../Question/Question";
 import { ContainerSC, NumbersContainerSC } from "./style";
 import { IProps, IQuestion } from "./types";
 import { Loader } from "../Loader/Loader";
+import { useAppSelector } from "../../store/hooks";
+import { getQuestions } from "../../store/selectors/questionsSelector";
 
 export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
-  const { questionNumber, button, questions, setQuestionNumber, handleClick } =
-    useGetQuestion(setStatus, setAnswersToDb);
-
+  const { questions } = useAppSelector(getQuestions);
+  const [text, setText] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState<IQuestion>(
     questions[0]
   );
-  const [text, setText] = useState("");
-  const [answered, setAnswered] = useState(false);
-  const { handleUpdateAnswer } = useHandleUpdateAnswer(setText, setAnswered);
+  const { questionNumber, button, setQuestionNumber, handleClick } =
+    useGetQuestion(setStatus, setAnswersToDb);
+  const { handleUpdateAnswer } = useHandleUpdateAnswer(setText);
 
   useEffect(() => {
     if (!currentQuestion) {
@@ -28,19 +29,16 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
       {currentQuestion ? (
         <>
           <NumbersContainerSC>
-            {questions.map((item, index) => (
+            {questions.map((question, index) => (
               <Number
-                key={item.id}
-                question={item}
+                key={question.id}
+                question={question}
                 children={index + 1}
-                answered={answered}
                 setQuestionNumber={setQuestionNumber}
                 setCurrentQuestion={setCurrentQuestion}
-                questions={questions}
                 currentQuestion={currentQuestion}
                 questionNumber={questionNumber}
                 handleUpdateAnswer={handleUpdateAnswer}
-                text={text}
               />
             ))}
           </NumbersContainerSC>
@@ -52,7 +50,6 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
               button={button}
               question={currentQuestion}
               questionNumber={questionNumber}
-              setAnswered={setAnswered}
               handleUpdateAnswer={handleUpdateAnswer}
             />
           </ContainerSC>

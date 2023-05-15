@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ButtonVariants } from "../../enums";
@@ -21,7 +21,6 @@ export const Question = ({
   setText,
   text,
   questionNumber,
-  setAnswered,
   handleUpdateAnswer,
   button,
   handleClick,
@@ -30,6 +29,7 @@ export const Question = ({
   const { t } = useTranslation();
   const placeholderAnswer = t("input.answer");
   const questionText = t("question").toUpperCase();
+  const [isDisable, setDisable] = useState(true);
 
   const { handleSubmit } = useForm<IAnswerForm>();
 
@@ -45,13 +45,15 @@ export const Question = ({
     dispatch(setAllAnswers(userAnswer));
     handleClick();
     handleUpdateAnswer(question.id);
+    setDisable(true);
   }, [dispatch, handleClick, handleUpdateAnswer, question.id, userAnswer]);
 
   const handleTextareaChange = useCallback(
     (value: string) => {
       setText(value);
+      setDisable(false);
     },
-    [setText]
+    [setText, setDisable]
   );
 
   return (
@@ -76,7 +78,7 @@ export const Question = ({
               <Button
                 type="submit"
                 variant={ButtonVariants.primary}
-                disabled={!text}
+                disabled={isDisable}
               >
                 {button}
               </Button>

@@ -6,22 +6,16 @@ import { IProps } from "./types";
 export const Number = ({
   question,
   children,
-  answered,
   setQuestionNumber,
   questionNumber,
   setCurrentQuestion,
-  questions,
-  text,
   handleUpdateAnswer,
 }: IProps) => {
   const [currentNumber, setCurrentNumber] = useState(false);
-  //   const [answered, setAnswered] = useState(false);
-
-  const { handleQuestionUpdate } = useHandleQuestionUpdate(
+  const { handleQuestionUpdate, isAnswered } = useHandleQuestionUpdate(
     question,
     setQuestionNumber,
     setCurrentQuestion,
-    questions,
     handleUpdateAnswer
   );
 
@@ -31,7 +25,7 @@ export const Number = ({
     } else {
       setCurrentNumber(false);
     }
-  }, [children, questionNumber, text]);
+  }, [children, questionNumber]);
 
   const handleClick = useCallback(() => {
     handleQuestionUpdate();
@@ -39,7 +33,7 @@ export const Number = ({
 
   return (
     <NumberSC
-      answered={answered}
+      answered={isAnswered}
       currentNumber={currentNumber}
       onClick={handleClick}
     >
