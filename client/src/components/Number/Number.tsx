@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { useHandleQuestionUpdate } from "../../hooks";
+import { useHandleQuestionUpdate, useSetCurrentNumber } from "../../hooks";
 import { NumberSC } from "./style";
 import { IProps } from "./types";
 
@@ -11,7 +10,7 @@ export const Number = ({
   setCurrentQuestion,
   handleUpdateAnswer,
 }: IProps) => {
-  const [currentNumber, setCurrentNumber] = useState(false);
+  const { currentNumber } = useSetCurrentNumber(children, questionNumber);
   const { handleQuestionUpdate, isAnswered } = useHandleQuestionUpdate(
     question,
     setQuestionNumber,
@@ -19,23 +18,11 @@ export const Number = ({
     handleUpdateAnswer
   );
 
-  useEffect(() => {
-    if (children === questionNumber) {
-      setCurrentNumber(true);
-    } else {
-      setCurrentNumber(false);
-    }
-  }, [children, questionNumber]);
-
-  const handleClick = useCallback(() => {
-    handleQuestionUpdate();
-  }, [handleQuestionUpdate]);
-
   return (
     <NumberSC
       answered={isAnswered}
       currentNumber={currentNumber}
-      onClick={handleClick}
+      onClick={handleQuestionUpdate}
     >
       {children}
     </NumberSC>
