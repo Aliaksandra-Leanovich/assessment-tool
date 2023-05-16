@@ -16,6 +16,7 @@ const questionsSlice = createSlice({
         { ...payload },
       ];
     },
+
     unsetAllQuestions: (state) => {
       state.questions = [];
     },
