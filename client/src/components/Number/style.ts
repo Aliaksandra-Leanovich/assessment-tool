@@ -10,12 +10,27 @@ export const NumberSC = styled.button<IStylesProps>`
   justify-content: center;
   padding: 10px 16px;
   background-color: ${({ currentNumber, theme }) =>
-    currentNumber ? theme.color.primaryLight : theme.color.boxShadow};
-  box-shadow: 0 3px 5px ${(props) => props.theme.color.buttonShadow};
+    currentNumber ? theme.color.secondary : theme.color.primaryLight};
+  color: ${({ currentNumber, theme }) =>
+    currentNumber ? theme.color.primaryLight : theme.color.secondaryDark};
   border: 1px solid
-    ${({ answered, theme }) => (answered ? theme.color.secondary : "none")};
+    ${({ answered, theme }) =>
+      answered ? theme.color.secondary : "transparent"};
   font-size: 16px;
   font-weight: 500;
   position: relative;
-  border-radius: 10px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 38px;
+    left: 29%;
+    background-color: transparent;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid ${({ theme }) => theme.color.secondary};
+    display: ${({ currentNumber }) => (currentNumber ? "block" : "none")};
+  }
 `;
