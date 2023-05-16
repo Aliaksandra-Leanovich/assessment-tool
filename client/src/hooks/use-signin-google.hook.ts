@@ -8,7 +8,6 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import uuid from "react-uuid";
 import { Collections } from "../enums";
 import { getAuthError } from "../helper";
 import { routes } from "../routes";
@@ -38,24 +37,23 @@ export const useSignInGoogle = (level: string | null) => {
   const setUsersToDB = async (
     email: string | null,
     level: string,
-    uid: string,
+    id: string,
     token: string
   ) => {
     const user = {
       email: email,
-      id: uuid(),
+      id: id,
       token: token,
       level: level,
-      uid: uid,
     };
 
     try {
       if (user?.email) {
-        await setDoc(doc(db, Collections.users, user.uid), user);
+        await setDoc(doc(db, Collections.users, user.id), user);
         dispatch(setUserLevel(level));
         dispatch(setUserEmail(email));
-        localStorage.setItem(localStorageId, user.uid);
-        dispatch(setUserId(user.uid));
+        localStorage.setItem(localStorageId, user.id);
+        dispatch(setUserId(user.id));
       }
     } catch (event) {
       console.error("Error adding document: ", event);
@@ -71,11 +69,11 @@ export const useSignInGoogle = (level: string | null) => {
         return await signInWithPopup(auth, provider)
           .then(async (userCredential) => {
             const token = await userCredential.user.getIdToken();
-            const uid = userCredential.user.uid;
+            const id = userCredential.user.uid;
             const email = userCredential.user.email;
 
             if (level) {
-              setUsersToDB(email, level, uid, token);
+              setUsersToDB(email, level, id, token);
             }
 
             setUserTokenToStorage(token);

@@ -8,7 +8,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { UseFormClearErrors } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import uuid from "react-uuid";
 import { IUserForm } from "../components/SigninForm/types";
 import { Collections } from "../enums";
 import { getAuthError } from "../helper";
@@ -42,24 +41,23 @@ export const useSignIn = (
   const setUsersToDB = async (
     email: string | null,
     level: string,
-    uid: string,
+    id: string,
     token: string | undefined
   ) => {
     const user = {
       email: email,
-      id: uuid(),
+      id: id,
       level: level,
       token: token,
-      uid: uid,
     };
 
     try {
       if (user?.email) {
-        await setDoc(doc(db, Collections.users, user.uid), user);
+        await setDoc(doc(db, Collections.users, user.id), user);
         dispatch(setUserLevel(level));
         dispatch(setUserEmail(email));
-        localStorage.setItem(localStorageId, user.uid);
-        dispatch(setUserId(user.uid));
+        localStorage.setItem(localStorageId, user.id);
+        dispatch(setUserId(user.id));
       }
     } catch (event) {
       console.error("Error adding document: ", event);
@@ -78,9 +76,9 @@ export const useSignIn = (
         )
           .then(async (userCredential) => {
             const token = await userCredential.user.getIdToken();
-            const uid = userCredential.user.uid;
+            const id = userCredential.user.uid;
             if (level) {
-              setUsersToDB(data.email, level, uid, token);
+              setUsersToDB(data.email, level, id, token);
             }
 
             clearErrors();
