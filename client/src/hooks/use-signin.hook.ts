@@ -12,31 +12,18 @@ import { IUserForm } from "../components/SigninForm/types";
 import { Collections } from "../enums";
 import { getAuthError } from "../helper";
 import { routes } from "../routes";
-import { useAppDispatch } from "../store/hooks";
-import {
-  setUserEmail,
-  setUserId,
-  setUserLevel,
-  setUserToken,
-} from "../store/slices/userSlice";
 import { app } from "../utils";
 import { db } from "../utils/firebase";
+import { useSetUserToStorage } from "./use-set-user-to-storage.hook";
 
 export const useSignIn = (
   clearErrors: UseFormClearErrors<IUserForm>,
   level: string | null
 ) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const localStorageKey = "userToken";
-  const localStorageId = "userId";
+  const { setUserToStorage } = useSetUserToStorage();
 
   const [error, setError] = useState<string | null>(null);
-
-  const setUserTokenToStorage = (token: string) => {
-    localStorage.setItem(localStorageKey, token);
-    dispatch(setUserToken(token));
-  };
 
   const setUsersToDB = async (
     email: string | null,
@@ -54,10 +41,6 @@ export const useSignIn = (
     try {
       if (user?.email) {
         await setDoc(doc(db, Collections.users, user.id), user);
-        dispatch(setUserLevel(level));
-        dispatch(setUserEmail(email));
-        localStorage.setItem(localStorageId, user.id);
-        dispatch(setUserId(user.id));
       }
     } catch (event) {
       console.error("Error adding document: ", event);
@@ -73,12 +56,13 @@ export const useSignIn = (
           .then(async (userCredential) => {
             const token = await userCredential.user.getIdToken();
             const id = userCredential.user.uid;
-            if (level) {
+
+            if (level && token) {
               setUsersToDB(email, level, id, token);
+              setUserToStorage(token, level, email, id);
             }
 
             clearErrors();
-            setUserTokenToStorage(token);
             navigate(routes.HOME);
           })
           .catch((error) => {
