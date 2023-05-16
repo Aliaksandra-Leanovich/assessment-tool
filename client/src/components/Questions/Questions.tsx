@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { useGetQuestion, useHandleUpdateAnswer } from "../../hooks";
+import {
+  useGetQuestion,
+  useHandleUpdateAnswer,
+  useShowModal,
+} from "../../hooks";
 import { Number } from "../Number/Number";
 import { Question } from "../Question/Question";
 import { ButtonContainerSC, ContainerSC, NumbersContainerSC } from "./style";
@@ -11,6 +15,8 @@ import { Button } from "../Button";
 import { ButtonVariants } from "../../enums";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { Modal } from "../Modal/Modal";
+import { Finish } from "../Finish/Finish";
 
 export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
   const { t } = useTranslation();
@@ -23,6 +29,7 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
     useGetQuestion(setStatus, setAnswersToDb);
   const { handleUpdateAnswer } = useHandleUpdateAnswer(setText);
   const { handleSubmit } = useForm();
+  const { show, showModal } = useShowModal();
 
   useEffect(() => {
     if (!currentQuestion) {
@@ -58,15 +65,16 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
               handleUpdateAnswer={handleUpdateAnswer}
             />
           </ContainerSC>
-          <ButtonContainerSC onSubmit={handleSubmit(handleFinish)}>
-            <Button
-              type="submit"
-              variant={ButtonVariants.primary}
-              onClick={handleFinish}
-            >
+          <ButtonContainerSC onSubmit={handleSubmit(showModal)}>
+            <Button type="submit" variant={ButtonVariants.primary}>
               {t("button.finish")}
             </Button>
           </ButtonContainerSC>
+          <Modal
+            children={<Finish handleFinish={handleFinish} />}
+            show={show}
+            handleClose={showModal}
+          />
         </>
       ) : (
         <Loader />
