@@ -14,7 +14,7 @@ export const useSetTimer = (
     if (!minutes && !seconds && time) {
       setMinutes(+time);
     }
-  }, [time]);
+  }, [minutes, seconds, time]);
 
   useEffect(() => {
     if (status === Statuses.Test) {
@@ -38,7 +38,7 @@ export const useSetTimer = (
         clearInterval(myInterval);
       };
     }
-  }, [minutes, seconds, setStatus, status]);
+  }, [minutes, seconds, setAnswersToDb, setStatus, status]);
 
   return { minutes, seconds, setMinutes };
 };

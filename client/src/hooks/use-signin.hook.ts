@@ -64,21 +64,17 @@ export const useSignIn = (
     }
   };
 
-  const onSubmit = (data: IUserForm) => {
+  const onSubmit = ({ email, password }: IUserForm) => {
     const auth = getAuth(app);
 
     setPersistence(auth, browserLocalPersistence)
       .then(async () => {
-        return await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        )
+        return await createUserWithEmailAndPassword(auth, email, password)
           .then(async (userCredential) => {
             const token = await userCredential.user.getIdToken();
             const id = userCredential.user.uid;
             if (level) {
-              setUsersToDB(data.email, level, id, token);
+              setUsersToDB(email, level, id, token);
             }
 
             clearErrors();

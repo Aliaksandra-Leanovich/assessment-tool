@@ -5,6 +5,7 @@ export const useSetCurrentNumber = (
   questionNumber: number
 ) => {
   const [currentNumber, setCurrentNumber] = useState(false);
+
   useEffect(() => {
     if (children === questionNumber) {
       setCurrentNumber(true);
