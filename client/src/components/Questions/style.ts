@@ -20,3 +20,7 @@ export const NumbersContainerSC = styled.div`
   max-width: 1200px;
   margin: 40px 0 60px;
 `;
+
+export const ButtonContainerSC = styled.form`
+  margin-top: 40px;
+`;

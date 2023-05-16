@@ -10,5 +10,7 @@
   "start.text.descriptions": "You can change your responses to questions betore the test ends. You can take the test only once. So do your best!",
   "button.next": "Next question",
   "queshion": "QUEsTION",
-  "input.answer": "Write your answer..."
+  "input.answer": "Write your answer...",
+  "button.finish": "Finish the test",
+  "button.save": "Save"
 }
