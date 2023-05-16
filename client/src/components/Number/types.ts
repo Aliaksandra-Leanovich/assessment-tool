@@ -9,3 +9,8 @@ export interface IProps {
   questionNumber: number;
   handleUpdateAnswer: (id: string) => void;
 }
+
+export interface IStylesProps {
+  currentNumber: boolean;
+  answered: boolean;
+}

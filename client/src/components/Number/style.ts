@@ -1,8 +1,5 @@
 import styled from "@emotion/styled";
-export interface IStylesProps {
-  currentNumber: boolean;
-  answered: boolean;
-}
+import { IStylesProps } from "./types";
 
 export const NumberSC = styled.button<IStylesProps>`
   display: flex;
