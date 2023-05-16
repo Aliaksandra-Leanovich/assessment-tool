@@ -22,6 +22,7 @@ export const useSetTimer = (
         if (seconds > 0) {
           setSeconds(seconds - 1);
         }
+
         if (seconds === 0) {
           if (minutes === 0) {
             clearInterval(myInterval);
