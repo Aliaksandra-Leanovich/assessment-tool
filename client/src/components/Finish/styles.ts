@@ -16,6 +16,7 @@ export const TextMediumBoldSC = styled.p`
 
 export const SpanMediumColorfulSC = styled.span`
   color: ${(props) => props.theme.color.secondary};
+  font-weight: 700;
 `;
 
 export const TextSmallSC = styled.p`
