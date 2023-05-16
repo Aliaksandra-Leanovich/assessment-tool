@@ -17,7 +17,10 @@ const answersSlice = createSlice({
         { ...payload },
       ];
     },
+    unsetAllAnswers: (state) => {
+      state.answers = [];
+    },
   },
 });
-export const { setAllAnswers } = answersSlice.actions;
+export const { setAllAnswers, unsetAllAnswers } = answersSlice.actions;
 export default answersSlice.reducer;
