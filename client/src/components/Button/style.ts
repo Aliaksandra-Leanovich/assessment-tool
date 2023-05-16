@@ -19,7 +19,7 @@ const variantStyles = (variant = ButtonVariants.primary) =>
       align-items: center;
 
       &:hover {
-        background-color: ${theme.color.error};
+        background-color: ${theme.color.secondaryDark};
       }
 
       &:disabled {
