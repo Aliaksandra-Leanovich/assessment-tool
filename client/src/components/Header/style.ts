@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
-
-export interface IProps {
-  disabled: boolean;
-}
+import { Link } from "react-router-dom";
+import { IStyleProps } from "./types";
 
 export const StyledHeaderSC = styled.header`
   width: 100%;
@@ -22,8 +20,21 @@ export const ContainerSC = styled.div`
   align-items: center;
 `;
 
-export const LogoContainerSC = styled.button<IProps>`
+export const LogoContainerSC = styled.button<IStyleProps>`
   max-width: 40px;
   ${({ disabled }) => (disabled ? true : false)};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+`;
+
+export const LinkSC = styled(Link)`
+  font-family: Inter, sans-serif;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.4s ease-out;
+  color: ${(props) => props.theme.color.primary};
+  background-color: ${(props) => props.theme.color.secondary};
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.secondaryDark};
+  }
 `;

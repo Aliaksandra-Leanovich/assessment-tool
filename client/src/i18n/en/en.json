@@ -12,5 +12,6 @@
   "queshion": "QUEsTION",
   "input.answer": "Write your answer...",
   "button.finish": "Finish the test",
-  "button.save": "Save"
+  "button.save": "Save",
+  "admin.link": "Create Test"
 }

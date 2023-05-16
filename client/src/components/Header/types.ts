@@ -7,3 +7,7 @@ export interface IProps {
   };
   setAnswersToDb: VoidFunction;
 }
+
+export interface IStyleProps {
+  disabled: boolean;
+}
