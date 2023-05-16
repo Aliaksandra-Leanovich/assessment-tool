@@ -21,6 +21,7 @@ export const useGetQuestion = (
       setStatus(Statuses.End);
       setAnswersToDb();
     }
+
     if (questions.length && questions.length === questionNumber) {
       setButton("Finish test");
     } else {
