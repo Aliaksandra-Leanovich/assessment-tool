@@ -20,7 +20,6 @@ export const Question = ({
   text,
   questionNumber,
   handleUpdateAnswer,
-  button,
   handleClick,
 }: IProps) => {
   const { t } = useTranslation();
@@ -59,7 +58,7 @@ export const Question = ({
                 variant={ButtonVariants.primary}
                 disabled={isDisable}
               >
-                {button}
+                {t("button.save")}
               </Button>
             </ContainerButtonSC>
           </form>

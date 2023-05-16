@@ -13,6 +13,6 @@ export { useInput } from "./use-input.hook";
 export { useSetCurrentNumber } from "./use-set-current-number.hook";
 export { useSetAnswersToDb } from "./use-set-answers-to-db.hook";
 export { useSetUserToStorage } from "./use-set-user-to-storage.hook";
+export { useShowModal } from "./use-show-modal.hook";
 export { useHandleQuestionUpdate } from "./use-handle-question-update.hook";
 export { useHandleUpdateAnswer } from "./use-handle-update-answer.hook";
-export { useOutsideClick } from "./use-outside-click.hook";
