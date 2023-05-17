@@ -16,3 +16,4 @@ export { useSetUserToStorage } from "./use-set-user-to-storage.hook";
 export { useShowModal } from "./use-show-modal.hook";
 export { useHandleQuestionUpdate } from "./use-handle-question-update.hook";
 export { useHandleUpdateAnswer } from "./use-handle-update-answer.hook";
+export { useHandleDeleteQuestion } from "./use-handle-delete-question.hook";

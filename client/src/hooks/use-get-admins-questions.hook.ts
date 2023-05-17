@@ -9,8 +9,7 @@ import { setAllAdminQuestions } from "../store/slices/adminQuestionsSlice";
 
 export const useGetAdminsQuestions = () => {
   const dispatch = useAppDispatch();
-  const [questionsFromDB, setQuestions] = useState<IQuestion[]>();
-  const { adminQuestions } = useAppSelector(getAdminQuestions);
+  const [questionsFromDB, setQuestions] = useState<Array<IQuestion>>([]);
 
   useEffect(() => {
     onSnapshot(collection(db, Collections.questions), (querySnapshot) => {
@@ -18,15 +17,18 @@ export const useGetAdminsQuestions = () => {
       querySnapshot.forEach((doc) => {
         questions.push(doc.data());
       });
-      setQuestions(questions);
-    });
-  }, []);
 
-  useEffect(() => {
-    questionsFromDB?.map((question) => {
-      return dispatch(setAllAdminQuestions(question));
+      setQuestions(questions);
     });
   }, [dispatch, questionsFromDB]);
 
-  return { adminQuestions };
+  useEffect(() => {
+    if (questionsFromDB) {
+      questionsFromDB.map((question) => {
+        return dispatch(setAllAdminQuestions(question));
+      });
+    }
+  }, [dispatch, questionsFromDB]);
+
+  return { questionsFromDB };
 };
