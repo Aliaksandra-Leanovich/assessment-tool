@@ -1,6 +1,11 @@
+import { doc, updateDoc } from "firebase/firestore";
 import { ChangeEvent, useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
+import { Collections } from "../../enums";
 import { useHandleDeleteQuestion } from "../../hooks";
+import { db } from "../../utils/firebase";
+import { IQuestion } from "../Questions/types";
 import {
   ButtonContainerSC,
   ButtonEditSC,
@@ -11,12 +16,8 @@ import {
   TextSC,
 } from "./style";
 import { IProps } from "./types";
-import { useForm } from "react-hook-form";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../utils/firebase";
-import { Collections } from "../../enums";
 
-export const AdminQueston = ({ question }: IProps) => {
+export const AdminQueston = ({ question, checked, setChecked }: IProps) => {
   const { handleDelete } = useHandleDeleteQuestion(question);
   const [edit, setEdit] = useState<boolean>(false);
   const { handleSubmit } = useForm();
@@ -55,13 +56,22 @@ export const AdminQueston = ({ question }: IProps) => {
     [setText]
   );
 
+  const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
+    let updatedList: Array<IQuestion> = [...checked];
+    if (event.target.checked) {
+      updatedList = [...checked, question];
+    } else {
+      updatedList.splice(checked.indexOf(question), 1);
+    }
+    setChecked(updatedList);
+  };
   return (
     <ContainerQuestionSC>
+      <input value={question.question} type="checkbox" onChange={handleCheck} />
       <FormSC onSubmit={handleSubmit(onSubmit)} edit={edit}>
         <InputSC placeholder="edit" onChange={handleChange} value={text} />
         <ButtonEditSC type="submit">save</ButtonEditSC>
       </FormSC>
-
       <TextSC onClick={handleEdit} edit={edit}>
         {question.question}
       </TextSC>

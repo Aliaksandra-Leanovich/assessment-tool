@@ -8,11 +8,13 @@ import { useForm } from "react-hook-form";
 import uuid from "react-uuid";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import { IQuestion } from "../Questions/types";
 
 export const AdminQuestions = () => {
   const { questionsFromDB } = useGetAdminsQuestions();
   const [text, setText] = useState<string>("");
   const { handleSubmit } = useForm();
+  const [checked, setChecked] = useState<Array<IQuestion>>([]);
 
   const setQuestionToDB = useCallback(async (text: string) => {
     let setId = uuid();
@@ -52,7 +54,12 @@ export const AdminQuestions = () => {
         <Button variant={ButtonVariants.primary} children="Add" />
       </FormSC>
       {questionsFromDB.map((question) => (
-        <AdminQueston key={question.id} question={question} />
+        <AdminQueston
+          key={question.id}
+          question={question}
+          checked={checked}
+          setChecked={setChecked}
+        />
       ))}
     </ContainerSC>
   );
