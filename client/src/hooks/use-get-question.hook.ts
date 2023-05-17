@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Statuses } from "../enums";
 import { useGetQuestionsFromDB } from "./use-get-questions-from-db.hook";
 
@@ -8,26 +8,31 @@ export const useGetQuestion = (
 ) => {
   const { questions } = useGetQuestionsFromDB();
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [button, setButton] = useState("Next question");
+  const [button, setButton] = useState("Save");
 
   const handleClick = useCallback(() => {
-    setQuestionNumber(questionNumber + 1);
-  }, [questionNumber]);
+    if (questions.length && questions.length === questionNumber) {
+      setQuestionNumber(questionNumber + 1);
+    }
+  }, [questionNumber, questions.length]);
 
   useEffect(() => {
     if (questions.length && questions.length < questionNumber) {
       setStatus(Statuses.End);
       setAnswersToDb();
     }
+
     if (questions.length && questions.length === questionNumber) {
       setButton("Finish test");
+    } else {
+      setButton("Save");
     }
   }, [questionNumber, questions.length, setAnswersToDb, setStatus]);
 
-  const question = useMemo(
-    () => questions.length && questions[questionNumber - 1],
-    [questions, questionNumber]
-  );
-
-  return { question, handleClick, questionNumber, button };
+  return {
+    handleClick,
+    questionNumber,
+    button,
+    setQuestionNumber,
+  };
 };

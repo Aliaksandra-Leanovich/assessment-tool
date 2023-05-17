@@ -47,5 +47,6 @@ export const WrapperSC = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  flex-direction: column;
+  height: 60vh;
 `;

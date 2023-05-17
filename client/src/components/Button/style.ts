@@ -13,9 +13,13 @@ const variantStyles = (variant = ButtonVariants.primary) =>
       transition: background-color 0.4s ease-out;
       color: ${theme.color.primary};
       background-color: ${theme.color.secondary};
+      height: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &:hover {
-        background-color: ${theme.color.error};
+        background-color: ${theme.color.secondaryDark};
       }
 
       &:disabled {
