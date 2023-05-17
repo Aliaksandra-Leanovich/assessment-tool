@@ -50,3 +50,12 @@ export const WrapperSC = styled.div`
   flex-direction: column;
   height: 70vh;
 `;
+export const WrapperAdminSC = styled.div`
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;

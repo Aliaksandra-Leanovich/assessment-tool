@@ -47,7 +47,7 @@ export const Header = ({ setStatus, status, test, setAnswersToDb }: IProps) => {
             test={test}
             setAnswersToDb={setAnswersToDb}
           />
-          {isAdmin && <LinkSC to={routes.Admin}> {t("admin.link")}</LinkSC>}
+          {!!isAdmin && <LinkSC to={routes.Admin}> {t("admin.link")}</LinkSC>}
         </ContainerSC>
       </WrapperSC>
     </StyledHeaderSC>

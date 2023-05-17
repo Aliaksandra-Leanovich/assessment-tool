@@ -90,7 +90,7 @@ export const useSignIn = (
   const SignIn = useCallback(
     ({ email, password }: IUserForm) => {
       const auth = getAuth(app);
-
+      localStorage.setItem("admin", email);
       setPersistence(auth, browserLocalPersistence)
         .then(async () => {
           return await signInWithEmailAndPassword(auth, email, password)

@@ -3,7 +3,7 @@ import { IQuestion } from "../components/Questions/types";
 export interface IUserStore {
   isAuthorized: string | null | void;
   token: string | null;
-  isAdmin: boolean;
+  isAdmin: string | null | void;
   id: string | null;
   level: string;
   email: string;
@@ -21,4 +21,8 @@ export interface IAnswer {
 
 export interface IAnswersInitial {
   answers: Array<IAnswer>;
+}
+
+export interface IAdminQuestionsInitial {
+  adminQuestions: Array<IQuestion>;
 }
