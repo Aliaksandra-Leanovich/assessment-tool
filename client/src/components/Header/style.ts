@@ -33,6 +33,7 @@ export const LinkSC = styled(Link)`
   transition: background-color 0.4s ease-out;
   color: ${(props) => props.theme.color.primary};
   background-color: ${(props) => props.theme.color.secondary};
+  display: flex;
 
   &:hover {
     background-color: ${(props) => props.theme.color.secondaryDark};

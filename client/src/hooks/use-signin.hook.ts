@@ -3,9 +3,17 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   setPersistence,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { useState } from "react";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
+import { useCallback, useEffect, useState } from "react";
 import { UseFormClearErrors } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { IUserForm } from "../components/SigninForm/types";
@@ -24,6 +32,7 @@ export const useSignIn = (
   const { setUserToStorage } = useSetUserToStorage();
 
   const [error, setError] = useState<string | null>(null);
+  const [admin, setAdmin] = useState<string | null>(null);
 
   const setUsersToDB = async (
     email: string | null,
@@ -46,33 +55,130 @@ export const useSignIn = (
       console.error("Error adding document: ", event);
     }
   };
+  const Signup = useCallback(
+    ({ email, password }: IUserForm) => {
+      const auth = getAuth(app);
 
-  const onSubmit = ({ email, password }: IUserForm) => {
-    const auth = getAuth(app);
+      setPersistence(auth, browserLocalPersistence)
+        .then(async () => {
+          return await createUserWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+              const token = await userCredential.user.getIdToken();
+              const id = userCredential.user.uid;
 
-    setPersistence(auth, browserLocalPersistence)
-      .then(async () => {
-        return await createUserWithEmailAndPassword(auth, email, password)
-          .then(async (userCredential) => {
-            const token = await userCredential.user.getIdToken();
-            const id = userCredential.user.uid;
+              if (level && token) {
+                setUsersToDB(email, level, id, token);
+                setUserToStorage(token, level, email, id);
+              }
 
-            if (level && token) {
-              setUsersToDB(email, level, id, token);
-              setUserToStorage(token, level, email, id);
-            }
+              clearErrors();
+              navigate(routes.HOME);
+            })
+            .catch((error) => {
+              setError(getAuthError(error.code));
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    [clearErrors, level, navigate, setUserToStorage]
+  );
 
-            clearErrors();
-            navigate(routes.HOME);
-          })
-          .catch((error) => {
-            setError(getAuthError(error.code));
-          });
-      })
-      .catch((error) => {
-        console.log(error);
+  const SignIn = useCallback(
+    ({ email, password }: IUserForm) => {
+      const auth = getAuth(app);
+
+      setPersistence(auth, browserLocalPersistence)
+        .then(async () => {
+          return await signInWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+              const token = await userCredential.user.getIdToken();
+              const id = userCredential.user.uid;
+
+              if (level && token) {
+                setUsersToDB(email, level, id, token);
+                setUserToStorage(token, level, email, id);
+              }
+
+              clearErrors();
+              navigate(routes.Admin);
+            })
+            .catch((error) => {
+              setError(getAuthError(error.code));
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    [clearErrors, level, navigate, setUserToStorage]
+  );
+
+  const checkAdminInDB = useCallback(async ({ email, password }: IUserForm) => {
+    const user = { email: email, password: password };
+    const querySnapshot = await getDocs(collection(db, "admins"));
+    console.log(user);
+    querySnapshot.forEach((doc) => {
+      if (email === doc.id) {
+        setAdmin(doc.id);
+        console.log(doc.id);
+      }
+    });
+  }, []);
+
+  const onSubmit = useCallback(
+    async ({ email, password }: IUserForm) => {
+      const user = { email: email, password: password };
+      // checkAdminInDB(user);
+      const querySnapshot = await getDocs(collection(db, "admins"));
+      console.log(user);
+      querySnapshot.forEach((doc) => {
+        if (email === doc.id) {
+          // setAdmin(doc.id);
+          console.log(doc.id);
+
+          // console.log("in");
+          SignIn(user);
+        } else {
+          Signup(user);
+          // console.log("up");
+        }
       });
-  };
+      // if (admin) {
+      //   // console.log("in");
+      //   SignIn(user);
+      // } else {
+      //   Signup(user);
+      //   // console.log("up");
+      // }
+      // const auth = getAuth(app);
+
+      // setPersistence(auth, browserLocalPersistence)
+      //   .then(async () => {
+      //     return await createUserWithEmailAndPassword(auth, email, password)
+      //       .then(async (userCredential) => {
+      //         const token = await userCredential.user.getIdToken();
+      //         const id = userCredential.user.uid;
+
+      //         if (level && token) {
+      //           setUsersToDB(email, level, id, token);
+      //           setUserToStorage(token, level, email, id);
+      //         }
+
+      //         clearErrors();
+      //         navigate(routes.HOME);
+      //       })
+      //       .catch((error) => {
+      //         setError(getAuthError(error.code));
+      //       });
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
+    },
+    [SignIn, Signup, admin, checkAdminInDB]
+  );
 
   return { error, onSubmit };
 };

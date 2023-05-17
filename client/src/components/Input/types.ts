@@ -6,15 +6,12 @@ interface IFormValues {
   email: string;
   password: string;
   errors?: string;
-  level: string;
 }
 
 export interface IRegister extends FieldValues, IFormValues {}
 
 export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: Path<IFormValues>;
-
   register: UseFormRegister<IUserForm>;
   errors?: string | null;
-
 }
