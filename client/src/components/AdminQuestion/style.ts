@@ -5,6 +5,7 @@ export const ContainerQuestionSC = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  column-gap: 10px;
   background-color: ${(props) => props.theme.color.primaryLight};
   padding: 20px;
   width: 100%;
@@ -19,12 +20,17 @@ export const TextSC = styled.div<IStylesProps>`
 
 export const InputSC = styled.input`
   width: 100%;
+  padding-left: 6px;
+  &[type="text"] {
+    font-size: 16px;
+  }
 `;
 
 export const FormSC = styled.form<IStylesProps>`
   display: ${({ edit }) => (edit ? "flex" : "none")};
   width: 100%;
   justify-content: space-between;
+  column-gap: 4px;
 `;
 
 export const ButtonContainerSC = styled.div`
@@ -45,14 +51,22 @@ export const ButtonSC = styled.button`
 `;
 
 export const ButtonEditSC = styled.button`
-  svg {
-    width: 14px;
-    fill: ${(props) => props.theme.color.secondary};
+  padding: 0 20px;
+  border-radius: 8px;
+  height: 24px;
+  transition: background-color 0.4s ease-out;
+  color: ${(props) => props.theme.color.primaryLight};
+  background-color: ${(props) => props.theme.color.secondary};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    transition: fill 0.3s ease-out;
-
-    &:hover {
-      fill: ${(props) => props.theme.color.error};
-    }
+  &:hover {
+    background-color: ${(props) => props.theme.color.secondaryDark};
   }
+`;
+
+export const CheckboxSC = styled.input<IStylesProps>`
+  cursor: pointer;
+  display: ${({ edit }) => (edit ? "none" : "block")};
 `;

@@ -10,6 +10,7 @@ import {
   ButtonContainerSC,
   ButtonEditSC,
   ButtonSC,
+  CheckboxSC,
   ContainerQuestionSC,
   FormSC,
   InputSC,
@@ -67,10 +68,15 @@ export const AdminQueston = ({ question, checked, setChecked }: IProps) => {
   };
   return (
     <ContainerQuestionSC>
-      <input value={question.question} type="checkbox" onChange={handleCheck} />
+      <CheckboxSC
+        edit={edit}
+        value={question.question}
+        type="checkbox"
+        onChange={handleCheck}
+      />
       <FormSC onSubmit={handleSubmit(onSubmit)} edit={edit}>
-        <InputSC placeholder="edit" onChange={handleChange} value={text} />
-        <ButtonEditSC type="submit">save</ButtonEditSC>
+        <InputSC type="text" onChange={handleChange} value={text} />
+        <ButtonEditSC type="submit">Save</ButtonEditSC>
       </FormSC>
       <TextSC onClick={handleEdit} edit={edit}>
         {question.question}
