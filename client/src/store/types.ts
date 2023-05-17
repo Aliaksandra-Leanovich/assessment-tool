@@ -3,6 +3,7 @@ import { IQuestion } from "../components/Questions/types";
 export interface IUserStore {
   isAuthorized: string | null | void;
   token: string | null;
+  isAdmin: boolean;
   id: string | null;
   level: string;
   email: string;

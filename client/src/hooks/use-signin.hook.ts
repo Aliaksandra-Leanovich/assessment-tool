@@ -23,16 +23,18 @@ import { routes } from "../routes";
 import { app } from "../utils";
 import { db } from "../utils/firebase";
 import { useSetUserToStorage } from "./use-set-user-to-storage.hook";
+import { useAppDispatch } from "../store/hooks";
+import { setAdmin } from "../store/slices/userSlice";
 
 export const useSignIn = (
   clearErrors: UseFormClearErrors<IUserForm>,
   level: string | null
 ) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { setUserToStorage } = useSetUserToStorage();
 
   const [error, setError] = useState<string | null>(null);
-  const [admin, setAdmin] = useState<string | null>(null);
 
   const setUsersToDB = async (
     email: string | null,
@@ -121,7 +123,7 @@ export const useSignIn = (
     console.log(user);
     querySnapshot.forEach((doc) => {
       if (email === doc.id) {
-        setAdmin(doc.id);
+        // setAdmin(doc.id);
         console.log(doc.id);
       }
     });
@@ -137,6 +139,7 @@ export const useSignIn = (
         if (email === doc.id) {
           // setAdmin(doc.id);
           console.log(doc.id);
+          dispatch(setAdmin(true));
 
           // console.log("in");
           SignIn(user);
@@ -177,7 +180,7 @@ export const useSignIn = (
       //     console.log(error);
       //   });
     },
-    [SignIn, Signup, admin, checkAdminInDB]
+    [SignIn, Signup]
   );
 
   return { error, onSubmit };

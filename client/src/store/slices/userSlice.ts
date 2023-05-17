@@ -3,6 +3,7 @@ import { IUserStore } from "../types";
 
 const initialState: IUserStore = {
   isAuthorized: localStorage.getItem("userToken"),
+  isAdmin: false,
   token: localStorage.getItem("userToken"),
   id: localStorage.getItem("userId"),
   email: "",
@@ -35,9 +36,14 @@ const userSlice = createSlice({
       state.uidLevel = action.payload;
     },
 
+    setAdmin: (state, action) => {
+      state.isAdmin = action.payload;
+    },
+
     unsetUser: (state) => {
       state.isAuthorized = localStorage.removeItem("userToken");
       state.id = "";
+      state.isAdmin = false;
       state.token = "";
       state.email = "";
       state.level = "";
@@ -52,6 +58,7 @@ export const {
   setUserLevel,
   setUserId,
   setUserEmail,
+  setAdmin,
   setUidLevel,
 } = userSlice.actions;
 export default userSlice.reducer;

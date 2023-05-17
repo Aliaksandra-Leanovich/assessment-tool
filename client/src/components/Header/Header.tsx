@@ -13,10 +13,13 @@ import {
 } from "./style";
 import { IProps } from "./types";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../store/hooks";
+import { getUserInfo } from "../../store/selectors";
 
 export const Header = ({ setStatus, status, test, setAnswersToDb }: IProps) => {
   const { handleLogout } = useLogout(status);
   const [disabled, isDisabled] = useState(false);
+  const { isAdmin } = useAppSelector(getUserInfo);
   const { t } = useTranslation();
 
   const setDisabled = useCallback(() => {
@@ -44,7 +47,7 @@ export const Header = ({ setStatus, status, test, setAnswersToDb }: IProps) => {
             test={test}
             setAnswersToDb={setAnswersToDb}
           />
-          <LinkSC to={routes.Admin}> {t("admin.link")}</LinkSC>
+          {isAdmin && <LinkSC to={routes.Admin}> {t("admin.link")}</LinkSC>}
         </ContainerSC>
       </WrapperSC>
     </StyledHeaderSC>
