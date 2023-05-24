@@ -16,8 +16,10 @@ import {
   TextSC,
 } from "./style";
 import { IProps } from "./types";
+import { useTranslation } from "react-i18next";
 
 export const AdminQueston = ({ question, checked }: IProps) => {
+  const { t } = useTranslation();
   const { handleSubmit } = useForm();
   const { handleCheck } = useHandleCheckedQuestion(question);
   const { handleDelete } = useHandleDeleteQuestion(question, checked);
@@ -35,7 +37,7 @@ export const AdminQueston = ({ question, checked }: IProps) => {
       />
       <FormSC onSubmit={handleSubmit(onSubmit)} edit={edit}>
         <InputSC type="text" onChange={handleChange} value={text} />
-        <ButtonEditSC type="submit">Save</ButtonEditSC>
+        <ButtonEditSC type="submit">{t("button.save")}</ButtonEditSC>
       </FormSC>
       <TextSC onClick={handleEdit} edit={edit}>
         {question.question}

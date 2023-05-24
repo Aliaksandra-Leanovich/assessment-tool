@@ -27,7 +27,7 @@ export const InputSC = styled.input`
   }
 
   &::placeholder {
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 

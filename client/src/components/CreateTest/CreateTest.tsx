@@ -6,6 +6,8 @@ import { useSetTest } from "../../hooks";
 import { Button } from "../Button";
 import { Select } from "../Select";
 import { IProps } from "./types";
+import { useTranslation } from "react-i18next";
+import { ContainerSC, FormSC, SelectSC, TotalSC } from "./style";
 
 export const CreateTest = ({
   total,
@@ -13,6 +15,7 @@ export const CreateTest = ({
   checked,
   questions,
 }: IProps) => {
+  const { t } = useTranslation();
   const { handleSubmit } = useForm();
   const [level, setLevel] = useState("");
   const [duration, setDuartion] = useState("");
@@ -26,32 +29,38 @@ export const CreateTest = ({
   );
 
   return (
-    <div>
-      <p>Total questions: {total}</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>Please select test level</p>
-        <Select
-          options={levels}
-          name="Level"
-          selected={level}
-          placeholder="Level"
-          setSelected={setLevel}
-        />
-        <p>Please select duration in minutes</p>
-        <Select
-          options={durations}
-          placeholder="Duration"
-          name="Duration"
-          selected={duration}
-          setSelected={setDuartion}
-        />
+    <ContainerSC>
+      <TotalSC>
+        {t("modal.title")} {total}
+      </TotalSC>
+      <FormSC onSubmit={handleSubmit(onSubmit)}>
+        <p>{t("modal.level")}</p>
+        <SelectSC>
+          <Select
+            options={levels}
+            name="Level"
+            selected={level}
+            placeholder="Level"
+            setSelected={setLevel}
+          />
+        </SelectSC>
+        <p>{t("modal.duration")}</p>
+        <SelectSC>
+          <Select
+            options={durations}
+            placeholder="Duration"
+            name="Duration"
+            selected={duration}
+            setSelected={setDuartion}
+          />
+        </SelectSC>
         <Button
           type="submit"
           variant={ButtonVariants.primary}
           children="Create"
-          disabled={!level && !duration}
+          disabled={!duration || !level}
         />
-      </form>
-    </div>
+      </FormSC>
+    </ContainerSC>
   );
 };

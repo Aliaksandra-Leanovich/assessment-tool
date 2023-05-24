@@ -38,7 +38,7 @@ export const OptionsSC = styled.div<IPropsOpen>`
   transition: visibility 0.3s ease-out, opacity 0.3s ease-out;
   pointer-events: none;
   z-index: 2;
-  padding: 8px;
+  padding: 8px 8px 8px 0;
   max-height: 200px;
   overflow-y: auto;
   pointer-events: all;

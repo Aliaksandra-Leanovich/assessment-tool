@@ -13,5 +13,9 @@
   "input.answer": "Write your answer...",
   "button.finish": "Finish the test",
   "button.save": "Save",
-  "admin.link": "Create Test"
+  "admin.link": "Create Test",
+  "modal.level": "Please select test level",
+  "modal.duration": "Please select duration in minutes",
+  "modal.title": "Total questions: ",
+  "modal.selected": "Selected questions: "
 }

@@ -8,8 +8,10 @@ import { Button } from "../Button";
 import { CreateTest } from "../CreateTest/CreateTest";
 import { Modal } from "../Modal/Modal";
 import { ContainerSC, FormSC, InformationSC, InputSC, TextSC } from "./style";
+import { useTranslation } from "react-i18next";
 
 export const AdminQuestions = () => {
+  const { t } = useTranslation();
   const { questionsFromDB, checked } = useGetAdminsQuestions();
   const [text, setText] = useState<string>("");
   const { show, showModal } = useShowModal();
@@ -20,13 +22,18 @@ export const AdminQuestions = () => {
     <ContainerSC>
       <InformationSC>
         <TextSC>
-          <p>Total questions: {questionsFromDB.length}</p>
-          <p>Selected questions: {checked?.length}</p>
+          <p>
+            {t("modal.title")}
+            {questionsFromDB.length}
+          </p>
+          <p>
+            {t("modal.selected")} {checked.length}
+          </p>
         </TextSC>
         <form onSubmit={handleSubmit(showModal)}>
           <Button
             variant={ButtonVariants.primary}
-            disabled={!checked?.length}
+            disabled={!checked.length}
             children="Create test"
           />
         </form>
@@ -49,7 +56,7 @@ export const AdminQuestions = () => {
       <Modal
         children={
           <CreateTest
-            total={checked?.length.toString()}
+            total={checked.length.toString()}
             checked={checked}
             handleClose={showModal}
             questions={questionsFromDB}

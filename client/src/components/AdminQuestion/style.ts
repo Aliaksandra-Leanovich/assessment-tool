@@ -21,8 +21,9 @@ export const TextSC = styled.div<IStylesProps>`
 export const InputSC = styled.input`
   width: 100%;
   padding-left: 6px;
+
   &[type="text"] {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 
