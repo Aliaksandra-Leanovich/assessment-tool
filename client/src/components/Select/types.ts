@@ -1,6 +1,3 @@
-import { UseFormRegister } from "react-hook-form";
-import { IUserForm } from "../SigninForm/types";
-
 export interface IOption {
   value: string;
   label: string;
@@ -9,7 +6,7 @@ export interface IOption {
 export interface IProps {
   options: Array<IOption>;
   name: string;
-  register: UseFormRegister<IUserForm>;
+  placeholder: string;
   setSelected: (item: string) => void;
   selected: string | null;
 }

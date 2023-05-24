@@ -1,63 +1,32 @@
-import { ChangeEvent, useCallback, useState } from "react";
-import { ButtonVariants, Collections } from "../../enums";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { ButtonVariants } from "../../enums";
+import { useSetQuestion, useShowModal } from "../../hooks";
 import { useGetAdminsQuestions } from "../../hooks/use-get-admins-questions.hook";
 import { AdminQueston } from "../AdminQuestion/AdminQueston";
 import { Button } from "../Button";
-import { ContainerSC, FormSC, InformationSC, InputSC, TextSC } from "./style";
-import { useForm } from "react-hook-form";
-import uuid from "react-uuid";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../utils/firebase";
-import { IQuestion } from "../Questions/types";
-import { useShowModal } from "../../hooks";
-import { Modal } from "../Modal/Modal";
 import { CreateTest } from "../CreateTest/CreateTest";
+import { Modal } from "../Modal/Modal";
+import { ContainerSC, FormSC, InformationSC, InputSC, TextSC } from "./style";
 
 export const AdminQuestions = () => {
-  const { questionsFromDB } = useGetAdminsQuestions();
+  const { questionsFromDB, checked } = useGetAdminsQuestions();
   const [text, setText] = useState<string>("");
-  const { handleSubmit } = useForm();
-  const [checked, setChecked] = useState<Array<IQuestion>>([]);
   const { show, showModal } = useShowModal();
-
-  const setQuestionToDB = useCallback(async (text: string) => {
-    let setId = uuid();
-
-    if (text) {
-      try {
-        setDoc(doc(db, Collections.questions, setId), {
-          question: text,
-          id: setId,
-        });
-      } catch (err) {
-        console.log("error", err);
-      }
-    }
-  }, []);
-
-  const onSubmit = useCallback(() => {
-    setQuestionToDB(text);
-    setText("");
-  }, [setQuestionToDB, text]);
-
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setText(event.target.value);
-    },
-    [setText]
-  );
+  const { handleSubmit } = useForm();
+  const { onSubmit, handleChange } = useSetQuestion(text, setText);
 
   return (
     <ContainerSC>
       <InformationSC>
         <TextSC>
           <p>Total questions: {questionsFromDB.length}</p>
-          <p>Selected questions: {checked.length}</p>
+          <p>Selected questions: {checked?.length}</p>
         </TextSC>
         <form onSubmit={handleSubmit(showModal)}>
           <Button
             variant={ButtonVariants.primary}
-            disabled={!checked.length}
+            disabled={!checked?.length}
             children="Create test"
           />
         </form>
@@ -75,15 +44,17 @@ export const AdminQuestions = () => {
         />
       </FormSC>
       {questionsFromDB.map((question) => (
-        <AdminQueston
-          key={question.id}
-          question={question}
-          checked={checked}
-          setChecked={setChecked}
-        />
+        <AdminQueston key={question.id} question={question} checked={checked} />
       ))}
       <Modal
-        children={<CreateTest total={checked.length.toString()} />}
+        children={
+          <CreateTest
+            total={checked?.length.toString()}
+            checked={checked}
+            handleClose={showModal}
+            questions={questionsFromDB}
+          />
+        }
         show={show}
         handleClose={showModal}
       />

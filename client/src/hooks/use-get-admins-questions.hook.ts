@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getAdminQuestions } from "../store/selectors/adminQuestionsSelector";
 import { collection, onSnapshot } from "firebase/firestore";
-import { Collections } from "../enums";
+import { useEffect, useState } from "react";
 import { IQuestion } from "../components/Questions/types";
-import { db } from "../utils/firebase";
+import { Collections } from "../enums";
+import { useAppDispatch } from "../store/hooks";
 import { setAllAdminQuestions } from "../store/slices/adminQuestionsSlice";
+import { db } from "../utils/firebase";
 
 export const useGetAdminsQuestions = () => {
   const dispatch = useAppDispatch();
   const [questionsFromDB, setQuestions] = useState<Array<IQuestion>>([]);
+  const [checked, setChecked] = useState<Array<IQuestion>>([]);
 
   useEffect(() => {
     onSnapshot(collection(db, Collections.questions), (querySnapshot) => {
@@ -30,5 +30,10 @@ export const useGetAdminsQuestions = () => {
     }
   }, [dispatch, questionsFromDB]);
 
-  return { questionsFromDB };
+  useEffect(() => {
+    const filtered = questionsFromDB?.filter((question) => question.checked);
+    setChecked(filtered);
+  }, [dispatch, questionsFromDB]);
+
+  return { questionsFromDB, checked };
 };

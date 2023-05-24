@@ -74,13 +74,13 @@ export const ArrowSC = styled.div<IPropsOpen>`
 
   &::before {
     left: 2px;
-    transform: ${({ isOpen }) => (isOpen ? "rotate(45deg)" : "rotate(-45deg)")};
+    transform: ${({ isOpen }) => (isOpen ? "rotate(-45deg)" : "rotate(45deg)")};
     background-color: ${(props) => props.theme.color.secondary};
   }
 
   &::after {
     left: -2px;
-    transform: ${({ isOpen }) => (isOpen ? "rotate(-45deg)" : "rotate(45deg)")};
+    transform: ${({ isOpen }) => (isOpen ? "rotate(45deg)" : "rotate(-45deg)")};
     background-color: ${(props) => props.theme.color.secondary};
   }
 `;

@@ -13,7 +13,13 @@ import {
 } from "./style";
 import { IProps } from "./types";
 
-export const Select = ({ options, name, setSelected, selected }: IProps) => {
+export const Select = ({
+  options,
+  name,
+  setSelected,
+  selected,
+  placeholder,
+}: IProps) => {
   const selectRef = useRef(null);
   const { isOpen, setOpen, onHandleSelect } = useSelect();
 
@@ -35,7 +41,7 @@ export const Select = ({ options, name, setSelected, selected }: IProps) => {
           <TriggerSC>
             <SelectedOptionSC>
               {options.find((item) => item.value === selected)?.label ||
-                "Select you level"}
+                placeholder}
             </SelectedOptionSC>
             <ArrowSC isOpen={isOpen} />
           </TriggerSC>

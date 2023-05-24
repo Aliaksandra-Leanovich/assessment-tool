@@ -10,7 +10,7 @@ import { IModalProps } from "./types";
 
 export const Modal = ({ handleClose, show, children }: IModalProps) => {
   return (
-    <WrapperSC show={show} onClick={handleClose}>
+    <WrapperSC show={show}>
       <ContainerSC show={show}>
         <ContainerButtonSC>
           <ButtonSC type="button" onClick={handleClose}>

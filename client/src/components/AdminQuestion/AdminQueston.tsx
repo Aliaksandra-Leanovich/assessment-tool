@@ -1,11 +1,10 @@
-import { doc, updateDoc } from "firebase/firestore";
-import { ChangeEvent, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
-import { Collections } from "../../enums";
-import { useHandleDeleteQuestion } from "../../hooks";
-import { db } from "../../utils/firebase";
-import { IQuestion } from "../Questions/types";
+import {
+  useHandleCheckedQuestion,
+  useHandleDeleteQuestion,
+  useHandleEditQuestion,
+} from "../../hooks";
 import {
   ButtonContainerSC,
   ButtonEditSC,
@@ -18,60 +17,20 @@ import {
 } from "./style";
 import { IProps } from "./types";
 
-export const AdminQueston = ({ question, checked, setChecked }: IProps) => {
-  const { handleDelete } = useHandleDeleteQuestion(question);
-  const [edit, setEdit] = useState<boolean>(false);
+export const AdminQueston = ({ question, checked }: IProps) => {
   const { handleSubmit } = useForm();
-  const [text, setText] = useState<string>("");
+  const { handleCheck } = useHandleCheckedQuestion(question);
+  const { handleDelete } = useHandleDeleteQuestion(question, checked);
+  const { edit, text, handleEdit, handleChange, onSubmit } =
+    useHandleEditQuestion(question);
 
-  const handleEdit = () => {
-    setEdit(true);
-    setText(question.question);
-  };
-
-  const editQuestion = useCallback(
-    async (text: string) => {
-      if (text) {
-        try {
-          await updateDoc(doc(db, Collections.questions, question.id), {
-            question: text,
-          });
-          setEdit(false);
-          setText("");
-        } catch (err) {
-          console.log("error", err);
-        }
-      }
-    },
-    [question]
-  );
-
-  const onSubmit = useCallback(() => {
-    editQuestion(text);
-  }, [editQuestion, text]);
-
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setText(event.target.value);
-    },
-    [setText]
-  );
-
-  const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
-    let updatedList: Array<IQuestion> = [...checked];
-    if (event.target.checked) {
-      updatedList = [...checked, question];
-    } else {
-      updatedList.splice(checked.indexOf(question), 1);
-    }
-    setChecked(updatedList);
-  };
   return (
     <ContainerQuestionSC>
       <CheckboxSC
         edit={edit}
         value={question.question}
         type="checkbox"
+        defaultChecked={question.checked}
         onChange={handleCheck}
       />
       <FormSC onSubmit={handleSubmit(onSubmit)} edit={edit}>
