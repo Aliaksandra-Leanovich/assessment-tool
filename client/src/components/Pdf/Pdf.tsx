@@ -4,14 +4,18 @@ import { useSendEmail } from "../../hooks";
 import { IProps } from "./types";
 import { ContainerSC, TextSC } from "./style";
 
-export const Pdf = ({ status }: IProps) => {
+export const Pdf = ({ status, handleLogout }: IProps) => {
   const { sendEmail } = useSendEmail();
 
   useEffect(() => {
     if (status === Statuses.End) {
       sendEmail();
+      setTimeout(function () {
+        window.location.reload();
+        handleLogout();
+      }, 2000);
     }
-  }, [status]);
+  }, [handleLogout, sendEmail, status]);
 
   return (
     <ContainerSC>

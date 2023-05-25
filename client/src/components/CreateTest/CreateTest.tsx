@@ -7,7 +7,15 @@ import { Button } from "../Button";
 import { Select } from "../Select";
 import { IProps } from "./types";
 import { useTranslation } from "react-i18next";
-import { ContainerSC, FormSC, SelectSC, TotalSC } from "./style";
+import {
+  BottomSC,
+  ContainerSC,
+  FormSC,
+  SelectContainerSC,
+  SelectTitleSC,
+  TitlelSC,
+  TotalSC,
+} from "./style";
 
 export const CreateTest = ({
   total,
@@ -30,22 +38,10 @@ export const CreateTest = ({
 
   return (
     <ContainerSC>
-      <TotalSC>
-        {t("modal.title")} {total}
-      </TotalSC>
+      <TitlelSC>Create Test</TitlelSC>
       <FormSC onSubmit={handleSubmit(onSubmit)}>
-        <p>{t("modal.level")}</p>
-        <SelectSC>
-          <Select
-            options={levels}
-            name="Level"
-            selected={level}
-            placeholder="Level"
-            setSelected={setLevel}
-          />
-        </SelectSC>
-        <p>{t("modal.duration")}</p>
-        <SelectSC>
+        <SelectContainerSC>
+          <SelectTitleSC>{t("modal.duration")}</SelectTitleSC>
           <Select
             options={durations}
             placeholder="Duration"
@@ -53,13 +49,26 @@ export const CreateTest = ({
             selected={duration}
             setSelected={setDuartion}
           />
-        </SelectSC>
-        <Button
-          type="submit"
-          variant={ButtonVariants.primary}
-          children="Create"
-          disabled={!duration || !level}
-        />
+          <SelectTitleSC>{t("modal.level")}</SelectTitleSC>
+          <Select
+            options={levels}
+            name="Level"
+            selected={level}
+            placeholder="Level"
+            setSelected={setLevel}
+          />
+        </SelectContainerSC>
+        <BottomSC>
+          <TotalSC>
+            {t("modal.title")} {total}
+          </TotalSC>
+          <Button
+            type="submit"
+            variant={ButtonVariants.primary}
+            children="Create"
+            disabled={!duration || !level}
+          />
+        </BottomSC>
       </FormSC>
     </ContainerSC>
   );

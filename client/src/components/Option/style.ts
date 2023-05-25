@@ -3,18 +3,17 @@ import styled from "@emotion/styled";
 export const OptionSC = styled.div`
   position: relative;
   display: block;
-  padding: 4px 10px;
-  margin-bottom: 6px;
+  padding: 8px 10px;
   cursor: pointer;
-  border-bottom: 1px solid transparent;
+  background-color: transparent;
   transition: border-bottom 0.5s ease-out;
 
   &:hover {
-    border-bottom: 1px solid ${(props) => props.theme.color.secondary};
+    background-color: ${(props) => props.theme.color.boxShadow};
   }
 `;
 
 export const OptionTextSC = styled.p`
   color: ${(props) => props.theme.color.secondary};
-  font-size: 16px;
+  font-size: 14px;
 `;

@@ -7,7 +7,7 @@ export const ContainerQuestionSC = styled.div`
   align-items: center;
   column-gap: 10px;
   background-color: ${(props) => props.theme.color.primaryLight};
-  padding: 20px;
+  padding: 24px;
   width: 100%;
   max-width: 800px;
 `;
@@ -41,6 +41,7 @@ export const ButtonContainerSC = styled.div`
 export const ButtonSC = styled.button`
   svg {
     width: 14px;
+    height: 28px;
     fill: ${(props) => props.theme.color.secondary};
 
     transition: fill 0.3s ease-out;
@@ -54,7 +55,7 @@ export const ButtonSC = styled.button`
 export const ButtonEditSC = styled.button`
   padding: 0 20px;
   border-radius: 8px;
-  height: 24px;
+  height: 28px;
   transition: background-color 0.4s ease-out;
   color: ${(props) => props.theme.color.primaryLight};
   background-color: ${(props) => props.theme.color.secondary};

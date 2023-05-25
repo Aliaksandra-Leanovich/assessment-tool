@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Logo from "../../assets/logoSmall.png";
 import { Statuses } from "../../enums";
-import { useLogout } from "../../hooks";
 import { routes } from "../../routes";
+import { useAppSelector } from "../../store/hooks";
+import { getUserInfo } from "../../store/selectors";
 import { Timer } from "../Timer/Timer";
 import {
   ContainerSC,
@@ -12,12 +14,14 @@ import {
   WrapperSC,
 } from "./style";
 import { IProps } from "./types";
-import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../store/hooks";
-import { getUserInfo } from "../../store/selectors";
 
-export const Header = ({ setStatus, status, test, setAnswersToDb }: IProps) => {
-  const { handleLogout } = useLogout(status);
+export const Header = ({
+  setStatus,
+  status,
+  test,
+  setAnswersToDb,
+  handleLogout,
+}: IProps) => {
   const [disabled, isDisabled] = useState(false);
   const { isAdmin } = useAppSelector(getUserInfo);
   const { t } = useTranslation();

@@ -8,7 +8,7 @@ import { IButton } from "./types";
 const variantStyles = (variant = ButtonVariants.primary) =>
   ({
     primary: css`
-      padding: 10px 20px;
+      padding: 0 20px;
       border-radius: 8px;
       transition: background-color 0.4s ease-out;
       color: ${theme.color.primary};

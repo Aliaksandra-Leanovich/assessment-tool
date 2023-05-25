@@ -1,18 +1,16 @@
-import React from "react";
-import { Button } from "../Button";
-import { useAppSelector } from "../../store/hooks";
-import { getQuestions } from "../../store/selectors/questionsSelector";
 import { useForm } from "react-hook-form";
-import { getAnswers } from "../../store/selectors/answersSelector";
 import { ButtonVariants } from "../../enums";
-import { IProps } from "./types";
+import { useAppSelector } from "../../store/hooks";
+import { getAnswers } from "../../store/selectors/answersSelector";
+import { getQuestions } from "../../store/selectors/questionsSelector";
+import { Button } from "../Button";
 import {
   ContainerSC,
   SpanMediumColorfulSC,
   TextMediumBoldSC,
-  TextSmallBoldSC,
   TextSmallSC,
 } from "./styles";
+import { IProps } from "./types";
 
 export const Finish = ({ handleFinish }: IProps) => {
   const { questions } = useAppSelector(getQuestions);
@@ -22,8 +20,7 @@ export const Finish = ({ handleFinish }: IProps) => {
   return (
     <ContainerSC>
       <TextSmallSC>
-        Are you sure that you want to <TextSmallBoldSC>finish </TextSmallBoldSC>
-        the test?
+        Are you sure that you want to finish the test?
         <TextMediumBoldSC>
           You have answered
           <SpanMediumColorfulSC> {answers.length} </SpanMediumColorfulSC>

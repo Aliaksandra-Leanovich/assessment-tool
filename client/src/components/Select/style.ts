@@ -17,7 +17,8 @@ export const SelectSC = styled.div<IPropsOpen>`
   position: relative;
   cursor: pointer;
   color: ${(props) => props.theme.color.secondaryDark};
-  border-bottom: 2px solid ${(props) => props.theme.color.secondary};
+  border: 1px solid ${(props) => props.theme.color.secondary};
+  border-radius: 10px;
   opacity: 1;
   visibility: visible;
   pointer-events: ${({ isOpen }) => (isOpen ? "none" : "all")};
@@ -38,7 +39,6 @@ export const OptionsSC = styled.div<IPropsOpen>`
   transition: visibility 0.3s ease-out, opacity 0.3s ease-out;
   pointer-events: none;
   z-index: 2;
-  padding: 8px 8px 8px 0;
   max-height: 200px;
   overflow-y: auto;
   pointer-events: all;
@@ -90,5 +90,5 @@ export const Container = styled.div`
 `;
 
 export const SelectedOptionSC = styled.p`
-  font-size: 16px;
+  font-size: 14px;
 `;

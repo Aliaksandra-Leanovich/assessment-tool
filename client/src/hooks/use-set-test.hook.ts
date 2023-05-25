@@ -21,6 +21,7 @@ export const useSetTest = (
           {
             question: question.question,
             id: question.id,
+            checked: question.checked,
           }
         );
       });

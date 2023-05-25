@@ -1,4 +1,4 @@
-import CrossIcon from "../../assets/cross-icon.svg";
+import { ReactComponent as CrossIcon } from "../../assets/cross-icon.svg";
 import {
   ButtonSC,
   ContainerButtonSC,
@@ -14,7 +14,7 @@ export const Modal = ({ handleClose, show, children }: IModalProps) => {
       <ContainerSC show={show}>
         <ContainerButtonSC>
           <ButtonSC type="button" onClick={handleClose}>
-            <img src={CrossIcon} alt="cross" />
+            <CrossIcon />
           </ButtonSC>
         </ContainerButtonSC>
         <ContainerChildSC>{children}</ContainerChildSC>
