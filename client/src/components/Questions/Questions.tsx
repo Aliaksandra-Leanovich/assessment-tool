@@ -66,9 +66,11 @@ export const Queshions = ({ setStatus, setAnswersToDb }: IProps) => {
             />
           </ContainerSC>
           <ButtonContainerSC onSubmit={handleSubmit(showModal)}>
-            <Button type="submit" variant={ButtonVariants.primary}>
-              {t("button.finish")}
-            </Button>
+            <Button
+              type="submit"
+              variant={ButtonVariants.primary}
+              children={t("button.finish")}
+            />
           </ButtonContainerSC>
           <Modal
             children={<Finish handleFinish={handleFinish} />}

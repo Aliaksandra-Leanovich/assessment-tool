@@ -38,13 +38,13 @@ export const CreateTest = ({
 
   return (
     <ContainerSC>
-      <TitlelSC>Create Test</TitlelSC>
+      <TitlelSC>{t("admin.link")}</TitlelSC>
       <FormSC onSubmit={handleSubmit(onSubmit)}>
         <SelectContainerSC>
           <SelectTitleSC>{t("modal.duration")}</SelectTitleSC>
           <Select
             options={durations}
-            placeholder="Duration"
+            placeholder={t("select.duration")}
             name="Duration"
             selected={duration}
             setSelected={setDuartion}
@@ -54,7 +54,7 @@ export const CreateTest = ({
             options={levels}
             name="Level"
             selected={level}
-            placeholder="Level"
+            placeholder={t("select.level")}
             setSelected={setLevel}
           />
         </SelectContainerSC>
@@ -65,7 +65,7 @@ export const CreateTest = ({
           <Button
             type="submit"
             variant={ButtonVariants.primary}
-            children="Create"
+            children={t("button.create")}
             disabled={!duration || !level}
           />
         </BottomSC>

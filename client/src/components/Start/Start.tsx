@@ -40,9 +40,8 @@ export const Start = ({ setStatus, test }: IStartProps) => {
             disabled={test ? false : true}
             variant={ButtonVariants.primary}
             handleClick={onClick}
-          >
-            {t("button.start")}
-          </Button>
+            children={t("button.start")}
+          />
         </ContainerSC>
       ) : (
         <Loader />

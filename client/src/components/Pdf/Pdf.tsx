@@ -3,9 +3,11 @@ import { Statuses } from "../../enums";
 import { useSendEmail } from "../../hooks";
 import { IProps } from "./types";
 import { ContainerSC, TextSC } from "./style";
+import { useTranslation } from "react-i18next";
 
 export const Pdf = ({ status, handleLogout }: IProps) => {
   const { sendEmail } = useSendEmail();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (status === Statuses.End) {
@@ -19,7 +21,7 @@ export const Pdf = ({ status, handleLogout }: IProps) => {
 
   return (
     <ContainerSC>
-      <TextSC>Thank you for taking the test. We will get back to you.</TextSC>
+      <TextSC>{t("pdf.text")}</TextSC>
     </ContainerSC>
   );
 };

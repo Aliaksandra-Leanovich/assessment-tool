@@ -57,9 +57,8 @@ export const Question = ({
                 type="submit"
                 variant={ButtonVariants.primary}
                 disabled={isDisable}
-              >
-                {t("button.save")}
-              </Button>
+                children={t("button.save")}
+              />
             </ContainerButtonSC>
           </form>
         </>

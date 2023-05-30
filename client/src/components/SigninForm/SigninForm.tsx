@@ -63,9 +63,12 @@ export const SigninForm = ({ level }: IProps) => {
           required: false,
         }}
       />
-      <Button variant={ButtonVariants.signin} disabled={!isDirty} type="submit">
-        {t("button.signin")}
-      </Button>
+      <Button
+        variant={ButtonVariants.signin}
+        disabled={!isDirty}
+        type="submit"
+        children={t("button.signin")}
+      />
     </StyledFormSC>
   );
 };

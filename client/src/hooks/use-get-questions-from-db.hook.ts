@@ -35,5 +35,7 @@ export const useGetQuestionsFromDB = () => {
     });
   }, [dispatch, questionsFromDB]);
 
-  return { questions };
+  return {
+    questions,
+  };
 };
