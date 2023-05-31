@@ -5,26 +5,24 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  setDoc,
-} from "firebase/firestore";
-import { useCallback, useEffect, useState } from "react";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { useCallback, useState } from "react";
 import { UseFormClearErrors } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { IUserForm } from "../components/SigninForm/types";
 import { Collections } from "../enums";
 import { getAuthError } from "../helper";
 import { routes } from "../routes";
+import { useAppDispatch } from "../store/hooks";
+import { setAdmin } from "../store/slices/userSlice";
 import { app } from "../utils";
 import { db } from "../utils/firebase";
 import { useSetUserToStorage } from "./use-set-user-to-storage.hook";
-import { useAppDispatch } from "../store/hooks";
-import { setAdmin } from "../store/slices/userSlice";
+
+export interface IUser {
+  email: string;
+  password: string;
+}
 
 export const useSignIn = (
   clearErrors: UseFormClearErrors<IUserForm>,
@@ -57,13 +55,15 @@ export const useSignIn = (
       console.error("Error adding document: ", event);
     }
   };
-  const Signup = useCallback(
+
+  const SignIn = useCallback(
     ({ email, password }: IUserForm) => {
       const auth = getAuth(app);
+      localStorage.setItem("admin", email);
 
       setPersistence(auth, browserLocalPersistence)
         .then(async () => {
-          return await createUserWithEmailAndPassword(auth, email, password)
+          return await signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
               const token = await userCredential.user.getIdToken();
               const id = userCredential.user.uid;
@@ -87,13 +87,13 @@ export const useSignIn = (
     [clearErrors, level, navigate, setUserToStorage]
   );
 
-  const SignIn = useCallback(
+  const Signup = useCallback(
     ({ email, password }: IUserForm) => {
       const auth = getAuth(app);
-      localStorage.setItem("admin", email);
+
       setPersistence(auth, browserLocalPersistence)
         .then(async () => {
-          return await signInWithEmailAndPassword(auth, email, password)
+          return await createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
               const token = await userCredential.user.getIdToken();
               const id = userCredential.user.uid;
@@ -104,83 +104,47 @@ export const useSignIn = (
               }
 
               clearErrors();
-              navigate(routes.Admin);
+              navigate(routes.HOME);
             })
+
             .catch((error) => {
-              setError(getAuthError(error.code));
+              if (error.code === "auth/email-already-in-use") {
+                SignIn({ email, password });
+              } else {
+                setError(getAuthError(error.code));
+              }
             });
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    [clearErrors, level, navigate, setUserToStorage]
+    [SignIn, clearErrors, level, navigate, setUserToStorage]
   );
 
-  const checkAdminInDB = useCallback(async ({ email, password }: IUserForm) => {
-    const user = { email: email, password: password };
-    const querySnapshot = await getDocs(collection(db, "admins"));
-    console.log(user);
-    querySnapshot.forEach((doc) => {
-      if (email === doc.id) {
-        // setAdmin(doc.id);
-        console.log(doc.id);
-      }
-    });
-  }, []);
+  const checkAdminInDB = useCallback(
+    async (user: IUser) => {
+      const querySnapshotAdmins = await getDocs(collection(db, "admins"));
+
+      querySnapshotAdmins.forEach((doc) => {
+        if (user.email === doc.id) {
+          dispatch(setAdmin(true));
+          SignIn(user);
+        } else {
+          Signup(user);
+        }
+      });
+    },
+    [SignIn, Signup, dispatch]
+  );
 
   const onSubmit = useCallback(
     async ({ email, password }: IUserForm) => {
       const user = { email: email, password: password };
-      // checkAdminInDB(user);
-      const querySnapshot = await getDocs(collection(db, "admins"));
-      console.log(user);
-      querySnapshot.forEach((doc) => {
-        if (email === doc.id) {
-          // setAdmin(doc.id);
-          console.log(doc.id);
-          dispatch(setAdmin(true));
 
-          // console.log("in");
-          SignIn(user);
-        } else {
-          Signup(user);
-          // console.log("up");
-        }
-      });
-      // if (admin) {
-      //   // console.log("in");
-      //   SignIn(user);
-      // } else {
-      //   Signup(user);
-      //   // console.log("up");
-      // }
-      // const auth = getAuth(app);
-
-      // setPersistence(auth, browserLocalPersistence)
-      //   .then(async () => {
-      //     return await createUserWithEmailAndPassword(auth, email, password)
-      //       .then(async (userCredential) => {
-      //         const token = await userCredential.user.getIdToken();
-      //         const id = userCredential.user.uid;
-
-      //         if (level && token) {
-      //           setUsersToDB(email, level, id, token);
-      //           setUserToStorage(token, level, email, id);
-      //         }
-
-      //         clearErrors();
-      //         navigate(routes.HOME);
-      //       })
-      //       .catch((error) => {
-      //         setError(getAuthError(error.code));
-      //       });
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
+      checkAdminInDB(user);
     },
-    [SignIn, Signup]
+    [checkAdminInDB]
   );
 
   return { error, onSubmit };

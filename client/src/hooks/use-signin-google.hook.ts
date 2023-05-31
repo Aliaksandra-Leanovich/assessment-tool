@@ -5,8 +5,8 @@ import {
   setPersistence,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { useState } from "react";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Collections } from "../enums";
 import { getAuthError } from "../helper";
@@ -14,9 +14,12 @@ import { routes } from "../routes";
 import { app } from "../utils";
 import { db } from "../utils/firebase";
 import { useSetUserToStorage } from "./use-set-user-to-storage.hook";
+import { setAdmin } from "../store/slices/userSlice";
+import { useAppDispatch } from "../store/hooks";
 
 export const useSignInGoogle = (level: string | null) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { setUserToStorage } = useSetUserToStorage();
 
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +46,20 @@ export const useSignInGoogle = (level: string | null) => {
     }
   };
 
+  const checkAdminInDB = useCallback(
+    async (email: string) => {
+      const querySnapshotAdmins = await getDocs(collection(db, "admins"));
+      localStorage.setItem("admin", email);
+
+      querySnapshotAdmins.forEach((doc) => {
+        if (email === doc.id) {
+          dispatch(setAdmin(true));
+        }
+      });
+    },
+    [dispatch]
+  );
+
   const signInWithGoogle = () => {
     const auth = getAuth(app);
 
@@ -58,6 +75,10 @@ export const useSignInGoogle = (level: string | null) => {
             if (level && token) {
               setUsersToDB(email, level, id, token);
               setUserToStorage(token, level, email, id);
+            }
+
+            if (email) {
+              checkAdminInDB(email);
             }
 
             navigate(routes.HOME);

@@ -16,13 +16,6 @@ export const useHandleDeleteQuestion = (
   const handleDelete = useCallback(async () => {
     try {
       await deleteDoc(doc(db, Collections.questions, question.id));
-
-      // let index = checked
-      //   .map((item) => {
-      //     return item.id;
-      //   })
-      //   .indexOf(question.id);
-      // checked.splice(index, 1);
     } catch (err) {
       console.log("error", err);
     }

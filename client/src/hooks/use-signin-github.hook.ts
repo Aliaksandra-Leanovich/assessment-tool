@@ -5,8 +5,8 @@ import {
   setPersistence,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { useState } from "react";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Collections } from "../enums";
 import { getAuthError } from "../helper";
@@ -14,9 +14,12 @@ import { routes } from "../routes";
 import { app } from "../utils";
 import { db } from "../utils/firebase";
 import { useSetUserToStorage } from ".";
+import { setAdmin } from "../store/slices/userSlice";
+import { useAppDispatch } from "../store/hooks";
 
 export const useSignInWithGithub = (level: string | null) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
   const { setUserToStorage } = useSetUserToStorage();
 
@@ -42,6 +45,20 @@ export const useSignInWithGithub = (level: string | null) => {
     }
   };
 
+  const checkAdminInDB = useCallback(
+    async (email: string) => {
+      const querySnapshotAdmins = await getDocs(collection(db, "admins"));
+      localStorage.setItem("admin", email);
+
+      querySnapshotAdmins.forEach((doc) => {
+        if (email === doc.id) {
+          dispatch(setAdmin(true));
+        }
+      });
+    },
+    [dispatch]
+  );
+
   const signInWithGithub = () => {
     const auth = getAuth(app);
 
@@ -53,14 +70,18 @@ export const useSignInWithGithub = (level: string | null) => {
           .then(async (userCredential) => {
             const credential =
               GithubAuthProvider.credentialFromResult(userCredential);
-            const token = await credential!.accessToken;
+            const token = await credential?.accessToken;
             const user = userCredential.user;
             const id = user.uid;
-            const email = user.email;
+            const email = userCredential.user.providerData[0].email;
 
             if (level && token) {
               setUsersToDB(email, level, id, token);
               setUserToStorage(token, level, email, id);
+            }
+
+            if (email) {
+              checkAdminInDB(email);
             }
 
             navigate(routes.HOME);
