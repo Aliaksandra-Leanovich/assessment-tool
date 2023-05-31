@@ -124,7 +124,9 @@ export const useSignIn = (
 
   const checkAdminInDB = useCallback(
     async (user: IUser) => {
-      const querySnapshotAdmins = await getDocs(collection(db, "admins"));
+      const querySnapshotAdmins = await getDocs(
+        collection(db, Collections.admins)
+      );
 
       querySnapshotAdmins.forEach((doc) => {
         if (user.email === doc.id) {

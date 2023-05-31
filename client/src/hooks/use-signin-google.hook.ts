@@ -48,8 +48,10 @@ export const useSignInGoogle = (level: string | null) => {
 
   const checkAdminInDB = useCallback(
     async (email: string) => {
-      const querySnapshotAdmins = await getDocs(collection(db, "admins"));
-      localStorage.setItem("admin", email);
+      const querySnapshotAdmins = await getDocs(
+        collection(db, Collections.admins)
+      );
+      localStorage.setItem(Collections.admins, email);
 
       querySnapshotAdmins.forEach((doc) => {
         if (email === doc.id) {
