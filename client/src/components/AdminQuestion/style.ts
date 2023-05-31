@@ -43,7 +43,6 @@ export const ButtonSC = styled.button`
     width: 14px;
     height: 28px;
     fill: ${(props) => props.theme.color.secondary};
-
     transition: fill 0.3s ease-out;
 
     &:hover {

@@ -11,8 +11,8 @@ export const useHandleCheckedQuestion = (question: IQuestion) => {
         await updateDoc(doc(db, Collections.questions, question.id), {
           checked: checked,
         });
-      } catch (err) {
-        console.log("error", err);
+      } catch (error) {
+        console.log("error", error);
       }
     },
     [question]

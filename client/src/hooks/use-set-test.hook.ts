@@ -63,8 +63,8 @@ export const useSetTest = (
         unsetUncheckedQuestions(checked);
         setChekedQuestions(checked);
         handleClose();
-      } catch (err) {
-        console.log("error", err);
+      } catch (error) {
+        console.log("error", error);
       }
     }
   }, [

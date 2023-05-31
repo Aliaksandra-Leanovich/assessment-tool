@@ -6,18 +6,14 @@ import { useCallback } from "react";
 
 export interface IProps {
   question: IQuestion;
-  checked: Array<IQuestion>;
 }
 
-export const useHandleDeleteQuestion = (
-  question: IQuestion,
-  checked: IQuestion[]
-) => {
+export const useHandleDeleteQuestion = (question: IQuestion) => {
   const handleDelete = useCallback(async () => {
     try {
       await deleteDoc(doc(db, Collections.questions, question.id));
-    } catch (err) {
-      console.log("error", err);
+    } catch (error) {
+      console.log("error", error);
     }
   }, [question]);
   return { handleDelete };

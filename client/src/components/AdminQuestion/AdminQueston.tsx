@@ -22,7 +22,7 @@ export const AdminQueston = ({ question, checked }: IProps) => {
   const { t } = useTranslation();
   const { handleSubmit } = useForm();
   const { handleCheck } = useHandleCheckedQuestion(question);
-  const { handleDelete } = useHandleDeleteQuestion(question, checked);
+  const { handleDelete } = useHandleDeleteQuestion(question);
   const { edit, text, handleEdit, handleChange, onSubmit } =
     useHandleEditQuestion(question);
 

@@ -22,8 +22,8 @@ export const useHandleEditQuestion = (question: IQuestion) => {
           });
           setEdit(false);
           setText("");
-        } catch (err) {
-          console.log("error", err);
+        } catch (error) {
+          console.log("error", error);
         }
       }
     },

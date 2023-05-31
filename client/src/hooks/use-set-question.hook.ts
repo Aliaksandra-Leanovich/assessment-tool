@@ -18,8 +18,8 @@ export const useSetQuestion = (
           id: setId,
           checked: false,
         });
-      } catch (err) {
-        console.log("error", err);
+      } catch (error) {
+        console.log("error", error);
       }
     }
   }, []);

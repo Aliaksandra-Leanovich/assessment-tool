@@ -20,8 +20,8 @@ export const useSetAnswersToDb = () => {
         await updateDoc(doc(db, Collections.users, id), {
           answers: answers.length ? answers : noAnswers,
         });
-      } catch (err) {
-        console.log("error", err);
+      } catch (error) {
+        console.log("error", error);
       }
     } else {
     }
