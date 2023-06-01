@@ -8,3 +8,7 @@ export interface IProps {
 export interface IStylesProps {
   edit: boolean;
 }
+
+export interface IStylesButton {
+  disabled: boolean;
+}

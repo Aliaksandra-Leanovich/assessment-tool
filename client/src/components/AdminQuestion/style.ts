@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { IStylesProps } from "./types";
+import { IStylesButton, IStylesProps } from "./types";
 
 export const ContainerQuestionSC = styled.div`
   display: flex;
@@ -51,20 +51,18 @@ export const ButtonSC = styled.button`
   }
 `;
 
-export const ButtonEditSC = styled.button`
-  padding: 0 20px;
-  border-radius: 8px;
+export const ButtonEditSC = styled.button<IStylesButton>`
+  padding: 0 4px;
   height: 28px;
-  transition: background-color 0.4s ease-out;
-  color: ${(props) => props.theme.color.primaryLight};
-  background-color: ${(props) => props.theme.color.secondary};
+  transition: color 0.4s ease-out;
+  color: ${(props) => props.theme.color.secondary};
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &:hover {
-    background-color: ${(props) => props.theme.color.secondaryDark};
-  }
+  ${({ disabled }) => (disabled ? true : false)};
+  color: ${({ disabled, theme }) =>
+    disabled ? theme.color.primaryDark : theme.color.secondary};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 `;
 
 export const CheckboxSC = styled.input<IStylesProps>`

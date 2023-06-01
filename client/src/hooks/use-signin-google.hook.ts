@@ -51,7 +51,7 @@ export const useSignInGoogle = (level: string | null) => {
       const querySnapshotAdmins = await getDocs(
         collection(db, Collections.admins)
       );
-      localStorage.setItem(Collections.admins, email);
+      localStorage.setItem("admin", email);
 
       querySnapshotAdmins.forEach((doc) => {
         if (email === doc.id) {

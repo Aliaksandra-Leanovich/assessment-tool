@@ -7,6 +7,7 @@ import { Collections } from "../enums";
 export const useHandleEditQuestion = (question: IQuestion) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const [disabled, setDisabled] = useState(true);
 
   const handleEdit = () => {
     setEdit(true);
@@ -22,6 +23,7 @@ export const useHandleEditQuestion = (question: IQuestion) => {
           });
           setEdit(false);
           setText("");
+          setDisabled(true);
         } catch (error) {
           console.log("error", error);
         }
@@ -37,9 +39,12 @@ export const useHandleEditQuestion = (question: IQuestion) => {
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setText(event.target.value);
+      if (question.question !== event.target.value) {
+        setDisabled(false);
+      }
     },
-    [setText]
+    [question.question]
   );
 
-  return { edit, text, handleEdit, handleChange, onSubmit };
+  return { edit, text, handleEdit, handleChange, onSubmit, disabled };
 };

@@ -23,7 +23,7 @@ export const AdminQueston = ({ question, checked }: IProps) => {
   const { handleSubmit } = useForm();
   const { handleCheck } = useHandleCheckedQuestion(question);
   const { handleDelete } = useHandleDeleteQuestion(question);
-  const { edit, text, handleEdit, handleChange, onSubmit } =
+  const { edit, text, disabled, handleEdit, handleChange, onSubmit } =
     useHandleEditQuestion(question);
 
   return (
@@ -37,7 +37,9 @@ export const AdminQueston = ({ question, checked }: IProps) => {
       />
       <FormSC onSubmit={handleSubmit(onSubmit)} edit={edit}>
         <InputSC type="text" onChange={handleChange} value={text} />
-        <ButtonEditSC type="submit">{t("button.save")}</ButtonEditSC>
+        <ButtonEditSC type="submit" disabled={disabled}>
+          {t("button.save")}
+        </ButtonEditSC>
       </FormSC>
       <TextSC onClick={handleEdit} edit={edit}>
         {question.question}
