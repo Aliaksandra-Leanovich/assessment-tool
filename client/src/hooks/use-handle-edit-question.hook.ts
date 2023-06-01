@@ -46,5 +46,5 @@ export const useHandleEditQuestion = (question: IQuestion) => {
     [question.question]
   );
 
-  return { edit, text, handleEdit, handleChange, onSubmit, disabled };
+  return { edit, text, handleEdit, handleChange, onSubmit, disabled, setEdit };
 };
