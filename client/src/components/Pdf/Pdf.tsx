@@ -3,19 +3,25 @@ import { Statuses } from "../../enums";
 import { useSendEmail } from "../../hooks";
 import { IProps } from "./types";
 import { ContainerSC, TextSC } from "./style";
+import { useTranslation } from "react-i18next";
 
-export const Pdf = ({ status }: IProps) => {
+export const Pdf = ({ status, handleLogout }: IProps) => {
   const { sendEmail } = useSendEmail();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (status === Statuses.End) {
       sendEmail();
+      setTimeout(function () {
+        window.location.reload();
+        handleLogout();
+      }, 2000);
     }
-  }, [status]);
+  }, [handleLogout, sendEmail, status]);
 
   return (
     <ContainerSC>
-      <TextSC>Thank you for taking the test. We will get back to you.</TextSC>
+      <TextSC>{t("pdf.text")}</TextSC>
     </ContainerSC>
   );
 };

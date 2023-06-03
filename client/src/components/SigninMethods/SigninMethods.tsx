@@ -16,16 +16,14 @@ export const SigninMethods = ({ level }: IProps) => {
         variant={ButtonVariants.secondary}
         type="submit"
         handleClick={signInWithGoogle}
-      >
-        <ImageSC src={GoogleImage} alt="Google" />
-      </Button>
+        children={<ImageSC src={GoogleImage} alt="Google" />}
+      />
       <Button
         variant={ButtonVariants.secondary}
         type="submit"
         handleClick={signInWithGithub}
-      >
-        <ImageSC src={GithubImage} alt="Github" />
-      </Button>
+        children={<ImageSC src={GithubImage} alt="Github" />}
+      />
     </ContainerSC>
   );
 };

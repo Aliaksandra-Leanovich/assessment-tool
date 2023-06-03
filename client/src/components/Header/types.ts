@@ -6,6 +6,7 @@ export interface IProps {
     time: string;
   };
   setAnswersToDb: VoidFunction;
+  handleLogout: VoidFunction;
 }
 
 export interface IStyleProps {

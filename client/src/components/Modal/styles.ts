@@ -15,10 +15,10 @@ export const WrapperSC = styled.div<IStylesProps>`
 export const ContainerSC = styled.div<IStylesProps>`
   position: fixed;
   background-color: ${(props) => props.theme.color.primary};
-  padding: 20px 26px 60px 40px;
+  padding: 26px 26px 20px 40px;
   width: 100%;
   align-self: center;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -35,25 +35,20 @@ export const ButtonSC = styled.button<IStylesProps>`
   width: 16px;
   cursor: pointer;
 
-  img {
-    svg {
-      path {
-        fill: ${(props) => props.theme.color.selectShadow};
-      }
+  svg {
+    path {
+      transition: fill 0.2s ease-out;
+      fill: ${(props) => props.theme.color.primaryDark};
     }
-  }
 
-  &:hover {
-    img {
-      svg {
-        path {
-          fill: ${(props) => props.theme.color.selectShadow};
-        }
+    &:hover {
+      path {
+        fill: ${(props) => props.theme.color.secondaryDark};
       }
     }
   }
 `;
 
 export const ContainerChildSC = styled.div`
-  padding: 20px 30px 0 0;
+  padding: 10px 30px 0 0;
 `;

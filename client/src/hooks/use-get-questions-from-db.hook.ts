@@ -10,7 +10,7 @@ import { db } from "../utils/firebase";
 
 export const useGetQuestionsFromDB = () => {
   const dispatch = useAppDispatch();
-  const [questionsFromDB, setQuestions] = useState<IQuestion[]>();
+  const [questionsFromDB, setQuestions] = useState<Array<IQuestion>>();
   const { questions } = useAppSelector(getQuestions);
   const { uidLevel } = useAppSelector(getUserInfo);
 
@@ -35,5 +35,7 @@ export const useGetQuestionsFromDB = () => {
     });
   }, [dispatch, questionsFromDB]);
 
-  return { questions };
+  return {
+    questions,
+  };
 };

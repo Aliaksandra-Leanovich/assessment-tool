@@ -3,7 +3,7 @@ import { IUserStore } from "../types";
 
 const initialState: IUserStore = {
   isAuthorized: localStorage.getItem("userToken"),
-  isAdmin: false,
+  isAdmin: localStorage.getItem("admin"),
   token: localStorage.getItem("userToken"),
   id: localStorage.getItem("userId"),
   email: "",
@@ -43,7 +43,7 @@ const userSlice = createSlice({
     unsetUser: (state) => {
       state.isAuthorized = localStorage.removeItem("userToken");
       state.id = "";
-      state.isAdmin = false;
+      state.isAdmin = localStorage.removeItem("admin");
       state.token = "";
       state.email = "";
       state.level = "";

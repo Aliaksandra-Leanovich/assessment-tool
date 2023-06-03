@@ -12,6 +12,7 @@ export const useHandleQuestionUpdate = (
 ) => {
   const { answers } = useAppSelector(getAnswers);
   const { questions } = useAppSelector(getQuestions);
+
   const isAnswered = !!answers.find(
     (answer) => answer.questionId === question.id
   );

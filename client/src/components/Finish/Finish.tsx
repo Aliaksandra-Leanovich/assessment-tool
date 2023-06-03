@@ -1,20 +1,20 @@
-import React from "react";
-import { Button } from "../Button";
-import { useAppSelector } from "../../store/hooks";
-import { getQuestions } from "../../store/selectors/questionsSelector";
 import { useForm } from "react-hook-form";
-import { getAnswers } from "../../store/selectors/answersSelector";
 import { ButtonVariants } from "../../enums";
-import { IProps } from "./types";
+import { useAppSelector } from "../../store/hooks";
+import { getAnswers } from "../../store/selectors/answersSelector";
+import { getQuestions } from "../../store/selectors/questionsSelector";
+import { Button } from "../Button";
 import {
   ContainerSC,
   SpanMediumColorfulSC,
   TextMediumBoldSC,
-  TextSmallBoldSC,
   TextSmallSC,
 } from "./styles";
+import { IProps } from "./types";
+import { useTranslation } from "react-i18next";
 
 export const Finish = ({ handleFinish }: IProps) => {
+  const { t } = useTranslation();
   const { questions } = useAppSelector(getQuestions);
   const { answers } = useAppSelector(getAnswers);
   const { handleSubmit } = useForm();
@@ -22,18 +22,17 @@ export const Finish = ({ handleFinish }: IProps) => {
   return (
     <ContainerSC>
       <TextSmallSC>
-        Are you sure that you want to <TextSmallBoldSC>finish </TextSmallBoldSC>
-        the test?
+        {t("finish.test.title")}
         <TextMediumBoldSC>
-          You have answered
+          {t("finish.test.answered")}
           <SpanMediumColorfulSC> {answers.length} </SpanMediumColorfulSC>
-          questions from
+          {t("finish.test.questions")}
           <SpanMediumColorfulSC> {questions.length}</SpanMediumColorfulSC>.
         </TextMediumBoldSC>
       </TextSmallSC>
       <form onSubmit={handleSubmit(handleFinish)}>
         <Button type="submit" variant={ButtonVariants.primary}>
-          Yes, I'm sure
+          {t("button.test.finish")}
         </Button>
       </form>
     </ContainerSC>
